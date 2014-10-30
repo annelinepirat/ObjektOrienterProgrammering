@@ -20,5 +20,5 @@ public class Oppgave_5_06
 			tekstområde.append (tall + "\t"); //denne legger til tall på tekstområdet.
 		}
 		JOptionPane.showMessageDialog(null, tekstområde); //utskrift av tekstområdet
-	}
-}
+	}//slutt på main metoden
+}//slutt på klassen

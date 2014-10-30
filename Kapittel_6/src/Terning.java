@@ -2,8 +2,8 @@ import java.util.Random;// importerer
 
 public class Terning 
 {
-	private int verdi;
-	private Random generator = new Random ();
+	private int verdi;//lager en int verdi med navn verdi
+	private Random generator = new Random ();//gjør kall på metoden random i java.util
 	
 //	public Terning()
 //	{

@@ -37,7 +37,7 @@ public class LagKlasseliste
 	public void leggTilElev()
 	{
 		Karakterprotokoll elev = new Karakterprotokoll();
-		int enElev = JOptionPane.showOptionDialog(
+		int svar = JOptionPane.showOptionDialog(
 				null,
 				"Vil du lese inn en elev?",
 				"Klasseliste",
@@ -46,7 +46,7 @@ public class LagKlasseliste
 				null,
 				null,
 				null);
-		while(enElev == JOptionPane.YES_OPTION)
+		while(svar == JOptionPane.YES_OPTION)
 		{
 			String elevForNavn = JOptionPane.showInputDialog("Skriv inn fornavnet på eleven");
 			String elevEtterNavn = JOptionPane.showInputDialog("Skriv inn etternavn på eleven");
@@ -87,7 +87,7 @@ public class LagKlasseliste
 						"Feil input, prøv igjen", 
 						JOptionPane.PLAIN_MESSAGE);// feilmelding
 			}// slutt try/catch blokk
-			enElev = JOptionPane.showOptionDialog(null, 
+			svar = JOptionPane.showOptionDialog(null, 
 					"Vil du lese inn flere elever?", 
 					"Klasseliste", 
 					JOptionPane.YES_NO_OPTION, 

@@ -12,11 +12,34 @@ public class TekstoppgaveTest
 {
 	public static void main (String [] args)
 	{
+		//Lager variablene som skal brukes
+		int påNytt;
 		String utskrift = "";
 		
-		double tallInn = Double.parseDouble(JOptionPane.showInputDialog("Skriv inn et tall mellom 3 og 12"));
+		Tekstoppgave talldata = new Tekstoppgave();// oppretter konstruktør
 		
-		Tekstoppgave talldata = new Tekstoppgave(tallInn);
-		String
-	}
-}
+		//får oss inn i while-løkka hvis man velger ja, hvis ikke avslutte
+		påNytt = JOptionPane.showOptionDialog(
+				null, 
+				"Vil du starte å sjekke et tall?", 
+				"Innenfor grensen?", 
+				JOptionPane.YES_NO_OPTION, 
+				JOptionPane.QUESTION_MESSAGE, 
+				null, null, null);
+		while (påNytt == JOptionPane.YES_OPTION)
+		{
+		String tallInn = JOptionPane.showInputDialog("Skriv inn et tall mellom 3 og 12");//String input som skal sjekkes
+		utskrift = talldata.getVerdi(tallInn);//velger hva utskriften skal bli, nemlig verdien "getVerdi"
+		
+		//starter while på nytt eller avslutte
+		JOptionPane.showMessageDialog(null, utskrift);
+		påNytt = JOptionPane.showOptionDialog(
+				null, 
+				"Vil du sjekke et tall til?", 
+				"Innenfor grensen?", 
+				JOptionPane.YES_NO_OPTION, 
+				JOptionPane.QUESTION_MESSAGE, 
+				null, null, null);
+		}//slutt while
+	}//slutt main
+}//slutt klassen

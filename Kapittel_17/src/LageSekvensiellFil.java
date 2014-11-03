@@ -68,10 +68,10 @@ public class LageSekvensiellFil
 				{
 					bank = new KontoPost (kontonr, forNavn, etterNavn, balanse);
 					output.format("%d %s %s %.2f\n",
-							bank.getkontonr(),
-							forNavn(),
-							etterNavn(),
-							balanse());
+							bank.getKonto(),
+							bank.getForNavn(),
+							bank.getEtterNavn(),
+							bank.getBalanse());
 				}
 				else
 				{

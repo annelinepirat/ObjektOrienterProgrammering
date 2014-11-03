@@ -2,18 +2,12 @@
 public class KarakterprotokollTest 
 {
 	public static void main (String [] args)
-	{
-		LagKlasseliste program = new LagKlasseliste();
+	{	
+		EndreKlasseliste kult = new EndreKlasseliste();
 		
-		program.aapneFil();
-		program.leggTilElev();
-		program.lukkFil();
-		
-		EndreKlasseliste kul = new EndreKlasseliste();
-		
-		kul.aapneFil();
-		kul.lesFil();
-		//kul.leggTilFil();
-		kul.lukkFil();
+		kult.aapneFil();
+		kult.lesFil();
+		//kult.leggTilFil();
+		kult.lukkFil();
 	}
 }

@@ -6,15 +6,15 @@ import java.util.NoSuchElementException;
 
 import javax.swing.JOptionPane;
 
-public class LagKlasseliste 
+public class LagKlasseliste // oppretter klassen LagKlassseliste
 {
-	private Formatter output;
+	private Formatter output;// oppretter en konstruktør som bruker formatter output
 	
-	public void aapneFil()
+	public void aapneFil()// starter metoden aapneFil
 	{
-		try
+		try// starter en try-/catch-metode 
 		{
-			output = new Formatter("Klasseliste.txt");
+			output = new Formatter("Klasseliste.txt");// oppretter en 
 		}
 		catch (SecurityException se)// hvis ikke try slår igjennom sjekk om den er låst eller ei
 		{
@@ -39,7 +39,7 @@ public class LagKlasseliste
 		Karakterprotokoll elev = new Karakterprotokoll();
 		int svar = JOptionPane.showOptionDialog(
 				null,
-				"Vil du lese inn en elev?",
+				"Vil du lese inn elever?",
 				"Klasseliste",
 				JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE,

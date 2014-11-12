@@ -15,6 +15,6 @@ public class Oppgave_5_05
 			tekstområde.append("\n");
 		}
 		
-		JOptionPane.showMessageDialog(null, tekstområde, "Rentesrente", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, tekstområde, "Rentesrente", JOptionPane.INFORMATION_MESSAGE);//melding til brukeren
 	}
 }

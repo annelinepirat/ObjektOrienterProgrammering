@@ -14,25 +14,26 @@ public class Oppgave_5_05b
 	}
 	public static void main (String [] args)
 	{
+		// leser inn verdier fra brukeren og parser
 		int startverdi = Integer.parseInt(JOptionPane.showInputDialog(null, "Skriv inn en startverdi: "));
 		int makseksponent = Integer.parseInt(JOptionPane.showInputDialog(null, "Skriv inn en hvor mange potenstabeller du vil se: ")); 
 		int antall = Integer.parseInt(JOptionPane.showInputDialog(null, "Skriv inn hvor mange linjer du vil se nedover : "));
 		
 		JTextArea tekstområde = new JTextArea(); // oppretter et tekstområde
 		
-		for (int n = 1; n <= makseksponent; n++)
+		for (int n = 1; n <= makseksponent; n++)// starter for-løkke
 		{
-			tekstområde.append(n + ". potens\t");
+			tekstområde.append(n + ". potens\t");// legger til n og ". potens" og mellomrom i tekstområde
 		}
-			tekstområde.append("\n");
-		for (int i = startverdi; i < startverdi + antall; i++)
+			tekstområde.append("\n");// legger til linjeskift i tekstområde
+		for (int i = startverdi; i < startverdi + antall; i++)// starter for-løkke
 		{
-			for (int j = 1; j <= makseksponent; j++)
+			for (int j = 1; j <= makseksponent; j++)// starter indre for-løkke
 			{
-				tekstområde.append(power(i,j)+"\t");
+				tekstområde.append(power(i,j)+"\t");// starter metoden power og sender inn verdier i og j til grunntall og eksponent, legger til produkt fra metoden power deretter en tabulator 
 			}
-			tekstområde.append("\n");
+			tekstområde.append("\n");// legger til linjeskift
 		}
-		JOptionPane.showMessageDialog (null, tekstområde);
-	}
-}
+		JOptionPane.showMessageDialog (null, tekstområde);// melding til brukeren som inneholder tekstområde
+	}// slutt på main metode
+}// slutt på klassen

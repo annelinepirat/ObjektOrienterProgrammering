@@ -9,13 +9,14 @@ public class Karakterprotokoll
 	private int karakter3;
 	private int karakter4;
 	private int karakter5;
+	private double samletKar;
 	
 	public Karakterprotokoll()
 	{
-		this("","","",0,0,0,0,0);
+		this("","","",0,0,0,0,0,0.0);
 	}
 	
-	public Karakterprotokoll(String fnavn, String enavn, String fag, int kar1, int kar2, int kar3, int kar4, int kar5)
+	public Karakterprotokoll(String fnavn, String enavn, String fag, int kar1, int kar2, int kar3, int kar4, int kar5, double sKar)
 	{
 		setElevForNavn (fnavn);
 		setElevEtterNavn (enavn);
@@ -25,11 +26,12 @@ public class Karakterprotokoll
 		setKar3 (kar3);
 		setKar4 (kar4);
 		setKar5 (kar5);
+		setSKar (sKar);
 	}
 	
 	public void setElevForNavn (String fnavn)
 	{
-		elevFornavn = fnavn;
+		this.elevFornavn = fnavn;
 	}
 	public String getElevForNavn()
 	{
@@ -38,7 +40,7 @@ public class Karakterprotokoll
 	
 	public void setElevEtterNavn (String enavn)
 	{
-		elevEtternavn = enavn;
+		this.elevEtternavn = enavn;
 	}
 	public String getElevEtterNavn()
 	{
@@ -47,7 +49,7 @@ public class Karakterprotokoll
 
 	public void setFag(String fag)
 	{
-		fagene = fag;
+		this.fagene = fag;
 	}
 	public String getFag ()
 	{
@@ -97,5 +99,14 @@ public class Karakterprotokoll
 	public int getKar5 ()
 	{
 		return karakter5;
+	}
+	
+	public void setSKar (double sKar)
+	{
+		samletKar = (getKar1() + getKar2() + getKar3() + getKar4() + getKar5())/5;
+	}
+	public double getSKar ()
+	{
+		return samletKar;
 	}
 }

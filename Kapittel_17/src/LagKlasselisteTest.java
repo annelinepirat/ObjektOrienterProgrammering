@@ -16,14 +16,14 @@ Utvid programmet slik at du kan lese inn karakterer for fem ulike
 oppgaver og generere en samlekarakter.
 
 (Denne oppgaven kan vi bruke to fredager på.)*/
-public class LagKlasselisteTest 
+public class LagKlasselisteTest // lager klassen LagKlasselisteTest
 {
-	public static void main (String [] args)
+	public static void main (String [] args)// oppretter main metode
 	{
-		LagKlasseliste program = new LagKlasseliste();
+		LagKlasseliste program = new LagKlasseliste();// Oppretter en konstruktør med navn program
 		
-		program.aapneFil();
-		program.leggTilElev();
-		program.lukkFil();
-	}
-}
+		program.aapneFil();// program starter metoden aapneFil
+		program.leggTilElev();// program starter metoden leffTilElev
+		program.lukkFil();// program starter metoden lukkFil
+	}// slutt main metode
+}// slutt på klassen

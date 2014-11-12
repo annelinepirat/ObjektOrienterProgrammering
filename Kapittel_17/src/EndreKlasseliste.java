@@ -2,7 +2,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.IllegalStateException;
 import java.util.Formatter;
-import java.util.FormatterClosedException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -52,15 +51,16 @@ public class EndreKlasseliste
 				elev.setElevForNavn(input.next());
 				elev.setElevEtterNavn(input.next());
 				elev.setFag(JOptionPane.showInputDialog("Fag for: " + elev.getElevForNavn() + " " + elev.getElevEtterNavn() +"\nSkriv inn fag du skal sette karakter på"));
-				elev.setKar1(Integer.parseInt(JOptionPane.showInputDialog("Skriv inn karakter for oppgave 1")));
-				elev.setKar2(Integer.parseInt(JOptionPane.showInputDialog("Skriv inn karakter for oppgave 2")));
-				elev.setKar3(Integer.parseInt(JOptionPane.showInputDialog("Skriv inn karakter for oppgave 3")));
-				elev.setKar4(Integer.parseInt(JOptionPane.showInputDialog("Skriv inn karakter for oppgave 4")));
-				elev.setKar5(Integer.parseInt(JOptionPane.showInputDialog("Skriv inn karakter for oppgave 5")));
+				elev.setKar1(Integer.parseInt(JOptionPane.showInputDialog(elev.getElevForNavn() + " " + elev.getElevEtterNavn() + "\nSkriv inn karakter for oppgave 1")));
+				elev.setKar2(Integer.parseInt(JOptionPane.showInputDialog(elev.getElevForNavn() + " " + elev.getElevEtterNavn() + "\nSkriv inn karakter for oppgave 2")));
+				elev.setKar3(Integer.parseInt(JOptionPane.showInputDialog(elev.getElevForNavn() + " " + elev.getElevEtterNavn() + "\nSkriv inn karakter for oppgave 3")));
+				elev.setKar4(Integer.parseInt(JOptionPane.showInputDialog(elev.getElevForNavn() + " " + elev.getElevEtterNavn() + "\nSkriv inn karakter for oppgave 4")));
+				elev.setKar5(Integer.parseInt(JOptionPane.showInputDialog(elev.getElevForNavn() + " " + elev.getElevEtterNavn() + "\nSkriv inn karakter for oppgave 5")));
+				elev.setSKar(elev.getKar1() + elev.getKar2() + elev.getKar3() + elev.getKar4() + elev.getKar5());
 				
 				if (elev.getFag() != null)
 				{
-					output.format("%s %s %s %d %d %d %d %d\n",
+					output.format("%s %s %s %d %d %d %d %d %s %2.2f\n",
 							elev.getElevForNavn(),
 							elev.getElevEtterNavn(),
 							elev.getFag(),
@@ -68,7 +68,9 @@ public class EndreKlasseliste
 							elev.getKar2(),
 							elev.getKar3(),
 							elev.getKar4(),
-							elev.getKar5());
+							elev.getKar5(),
+							"Gjennomsnittskarakter:",
+							elev.getSKar());
 				}
 				else
 				{
@@ -94,6 +96,9 @@ public class EndreKlasseliste
 						+ elev.getKar4()
 						+ "\t"
 						+ elev.getKar5()
+						+ "\t"
+						+ "Gjennomsnittskarakter: "
+						+ elev.getSKar()
 						+ "\n");
 			}
 			JOptionPane.showMessageDialog(
@@ -128,7 +133,7 @@ public class EndreKlasseliste
 	{
 		if (input != null)
 			input.close();
-		if (output != null)
-			output.close();
-	}
+		if (output != null)//
+			output.close();// lukke output
+	}// slutt på metoden lukkFil
 }

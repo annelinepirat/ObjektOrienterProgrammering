@@ -11,26 +11,31 @@ public class Oppgave_5_04
 {
     public static void main( String args[] )
     {
+    	// setter ulike variabler
     	int nedreGrense = 0, ovreGrense = 0, sum = 0;
     	String regnestykke = "";
+    	// leser inn fra brukeren og parser
     	String fra = JOptionPane.showInputDialog("Skriv inn et heltall som skal være nedre grense");
     	String til = JOptionPane.showInputDialog("Skriv inn et heltall som skal være øvre grense");
     	nedreGrense = Integer.parseInt(fra);
     	ovreGrense = Integer.parseInt(til);
     	
-    	if (nedreGrense < ovreGrense)
+    	if (nedreGrense < ovreGrense)// starter if
     	{
-    		for ( int i = nedreGrense; i < ovreGrense; i += 1)
+    		for ( int i = nedreGrense; i < ovreGrense; i += 1)// starter for-løkke
     		{
-    			sum += i;
+    			sum += i;// legger til "i" i sum
 			
-    			if(i > nedreGrense) regnestykke += "+"; //Sleng på teksten "+", men ikkje i første runda.
-    			regnestykke += i;
-    		}
+    			if(i > nedreGrense) // starter if
+    			{
+    				regnestykke += "+"; //Sleng på teksten "+", men ikke i første runda.
+    				regnestykke += i;// legger til "i" i regnestykke
+    			}
+    		}// slutt for-løkke
  
-		JOptionPane.showMessageDialog( null, "Summen blir: "+ sum +"\nRegnestykket blir: "+ regnestykke );
-    	}
+		JOptionPane.showMessageDialog( null, "Summen blir: "+ sum +"\nRegnestykket blir: "+ regnestykke );// melding til brukeren
+    	}// slutt if
     	else
-    		JOptionPane.showMessageDialog(null, "Tallet som du satte som nedre grense er større enn øvre grense!");
-    }
-}
+    		JOptionPane.showMessageDialog(null, "Tallet som du satte som nedre grense er større enn øvre grense!");// melding til brukeren
+    }// slutt main metoden
+}// slutt klasse

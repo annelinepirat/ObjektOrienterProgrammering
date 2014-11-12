@@ -9,11 +9,11 @@ public class Tidskonverterer
 	}
 	public int getAntSekuder ()// lager en get verdi og returnerer antSekunder
 	{
-		return antSekunder;
+		return antSekunder;// returnerer antSekunder
 	}
 	public String konvertertTid ()// lager en string som konverterer tiden
 	{
-		int timer = antSekunder / 3600, restTimer = antSekunder % 3600, minutter = restTimer / 60, sekunder = restTimer % 60;
-		return timer + " timer, " + minutter + " minutter og " + sekunder + " sekunder.";
+		int timer = antSekunder / 3600, restTimer = antSekunder % 3600, minutter = restTimer / 60, sekunder = restTimer % 60;//oppretter en variabel timer, restTimer, minutter og sekunder og regner ut og setter vrdier
+		return timer + " timer, " + minutter + " minutter og " + sekunder + " sekunder.";// dette skal returneres til konvertertTid
 	}
-}// slutt på klassen
+}// slutt på klassen og set/get

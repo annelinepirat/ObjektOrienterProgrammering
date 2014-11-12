@@ -21,7 +21,7 @@ public class Oppgave_5_08
 		}
 		
 		innlestTall = JOptionPane.showInputDialog(null, "Skriv et tall til:"); //starter på en ny runde
-		tall = Integer.parseInt(innlestTall);
+		tall = Integer.parseInt(innlestTall);// parser innlestTall til tall
 		}
 		if (antall > 0 && gjennomsnitt > 0) // sjekker om vi skal regne ut gjennomsnittet
 			sumGjennomsnitt = gjennomsnitt/antall;

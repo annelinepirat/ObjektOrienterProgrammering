@@ -103,7 +103,7 @@ public class Oppgave_04_KredittVurdering// start klassen
 		}
 		
 		return valg [valgMulighet - 1];
-	}
+	}// slutt på metoden 
 	
 	public void prosessValg()
 	{
@@ -123,7 +123,7 @@ public class Oppgave_04_KredittVurdering// start klassen
 			break;
 			}
 			lesPoster();
-			kontoType = getValgMulighet();
-		}
-	}
+			kontoType = getValgMulighet();//
+		}//gå på toppen så lenge kontoType er forskjellig fra Oppgave_04_MenyValg.SLUTT
+	}// slutt på metoden prosessValg
 }// slutt på klassen

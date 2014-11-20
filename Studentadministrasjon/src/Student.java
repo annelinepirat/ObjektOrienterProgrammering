@@ -1,115 +1,125 @@
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Random;
 
-public class Student implements Serializable{
+public class Student 
+{
+	//klassevariabler
+	String fornavn = "";
+	String etternavn = "";
+	String kjonn = "";
+	int studiestart = 0;
+	String fag = "";
+	int studentnummer = 0;
+	boolean godkjentEksamen = false;
+	ArrayList<Oppgave> oppgaver;
+	boolean mann = false;
+	//konstruktør
+	public Student(String elevFornavn, String elevEtternavn, String elevKjonn, int studieStart, String fagomrade,  boolean mann) 
+	{
+		this.fornavn = elevFornavn;
+		this.etternavn = elevEtternavn;
+		this.kjonn = elevKjonn;
+		this.studiestart = studieStart;
+		this.fag = fagomrade;
+		this.mann = mann;
+		this.oppgaver = new ArrayList<Oppgave>();
+//		Random randomTall = new Random();
+//		this.studentnummer = randomTall.nextInt(99999);
+	}
 
-	//Class Student
-	//variabler fag, studiestart, oppgaver, kjønn, fornavn, etternavn, id, godkjentforeksamen
-	//
-	//funksjoner for å hente og sette alle variablene.
-	//set og get
-	//
-	//id variablen kan settes som en Date.long (dette bare for å lage et unikt nummer på studentet.. det kan jo hende at noen med samme navn går på skolen.)
-	//
-	//funksjon isgodkjent
-	//hvis alle oppgaver er godkjent, returner true.
-	
-	
-	private String forNavn = "";
-	private String etterNavn = "";
-	private String fagOmrade ="";
-	private boolean mann = true;
-	private int studieStart = 2014;
-	private long id = new Date().getTime();  //En id for å gjøre studenten unik (i tilfelle det er to med helt like navn).
-	private Vector<Oppgave> oppgaver = new Vector();
-	
-	
-	public Student(){
-		
+	public void setFag(String fag) 
+	{
+		this.fag = fag;
 	}
-	
-	public Student(String forNavn, String etterNavn, int studieStart, boolean kjonnMann, String fagOmrade){
-		this.forNavn = forNavn;
-		this.etterNavn = etterNavn;
-		this.studieStart = studieStart;
-		this.mann = kjonnMann;
-		this.fagOmrade = fagOmrade;
+	public String getFag() 
+	{
+		return fag;
 	}
-	
-	public String getForNavn(){
-		return forNavn;
+
+	public void setStudiestart(int studiestart) 
+	{
+		this.studiestart = studiestart;
 	}
-	
-	public void setForNavn(String forNavn){
-		this.forNavn = forNavn;
+	public int getStudiestart() 
+	{
+		return studiestart;
 	}
-	
-	public String getEtterNavn(){
-		return etterNavn;
-	}
-	
-	public void setEtterNavn(String etterNavn){
-		this.etterNavn = etterNavn;
-	}
-	
-	public String toString(){
-		return forNavn + " " + etterNavn;
-	}
-	
-	public void setFagOmrade(String fagOmrade){
-		this.fagOmrade = fagOmrade;
-	}
-	
-	public String getFagOmrade(){
-		return fagOmrade;
-	}
-	
-	public void setStudieStart(String studieStart){
-		this.studieStart = Integer.parseInt(studieStart);
-	}
-	
-	public int getStudieStart(){
-		return studieStart;
-	}
-	
-	public boolean isMann(){
-		return mann;
-	}
-	
-	public boolean isDame(){
-		return !mann;
-	}
-	
-	public void setKjonn(boolean mann){
+
+	public void setMann(boolean mann) 
+	{
 		this.mann = mann;
 	}
-	
-	public long getId(){
-		return id;
-	}
-	
-	public void addOppgave(Oppgave opg){
-		oppgaver.addElement(opg);
-	}
-	
-	public Oppgave[] getOppgaver(){ //Returnerer alle oppgavene som en array.
-		Oppgave[] opg = new Oppgave[oppgaver.size()];
-		oppgaver.toArray(opg);
-		return opg;
-	}
-	
-	public boolean isGodkjent(){
 
-		//Gå gjennom alle oppgaver, dersom en ikke er godkjent: returner false
-		for (int i = 0; i < oppgaver.size(); i++){
-			if (oppgaver.elementAt(i).isGodkjent())
-				continue;
-			else
-				return false;
-				
+	public boolean isMann() 
+	{
+		return mann;
+	}
+
+	public void setFornavn(String fornavn) 
+	{
+		this.fornavn = fornavn;
+	}
+	public String getFornavn() 
+	{
+		return fornavn;
+	}
+	
+	public void setEtternavn(String etternavn) 
+	{
+		this.etternavn = etternavn;
+	}
+	public String getEtternavn() 
+	{
+		return etternavn;
+	}
+	
+	public void setKjonn(String kjonn)
+	{
+		this.kjonn = kjonn;
+	}
+	public String getKjonn()
+	{
+		return kjonn;
+	}
+
+//	public int getStudentnummer() 
+//	{
+//		return studentnummer;
+//	}
+//
+//	public void setStudentnummer(int studentnummer) 
+//	{
+//		this.studentnummer = studentnummer;
+//	}
+
+	public boolean isGodkjentEksamen() 
+	{
+		for(Oppgave temp : oppgaver) 
+		{ //gÂ gjennom alle oppgaver
+			if(temp.isGodkjent()) 
+			{ // er den godkjent?
+				godkjentEksamen = true;
+			}
+			else 
+			{ //ikke godkjent
+				godkjentEksamen = false;
+				break; //hopp ut
+			}
 		}
-		
-		return true;
+		return godkjentEksamen;
+	}
+
+	public void setOppgaver(ArrayList<Oppgave> oppgaver) 
+	{
+		this.oppgaver = oppgaver;
+	}
+	public ArrayList<Oppgave> getOppgaver() 
+	{
+		return oppgaver;
+	}
+	
+	public void setEnOppgave(Oppgave oppgave) 
+	{
+		this.oppgaver.add(oppgave);
 	}
 }

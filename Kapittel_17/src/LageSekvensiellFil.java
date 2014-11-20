@@ -90,21 +90,23 @@ public class LageSekvensiellFil
 			 } // end catch
 			
 			 System.out.printf( "%s %s\n%s", "Skriv konto nr (>0),",
-			 "fornavn, etternavn of balanse.", "? " );			 
-		}
-	}
+			 "fornavn, etternavn of balanse.", "? " );// utskrift		 
+		}// kjører while så lenge det er noe å lese
+	}// slutt på metoden leggTil
 	
 	public void lukkFil()
 	{
+		// prøv å lukke fil om filen har fått innhold
 		try
 		{
 			if (output != null)
 				output.close();
 		}
+		// hvis det ikke går å lukke; feilmelding
 		catch(FormatterClosedException fce)
 		{
 			System.err.println("Feil ved lukking av fil.");
 			System.exit(1);
-		}
-	}
-}
+		} 
+	}// slutt på metoden lukkFil
+}// slutt på klassen

@@ -4,7 +4,6 @@ import java.lang.IllegalStateException;
 import java.util.Formatter;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-
 import javax.swing.*;
 
 public class EndreKlasseliste 
@@ -14,12 +13,13 @@ public class EndreKlasseliste
 	
 	public void aapneFil()
 	{
+		//prøv å åpne klasseliste for å lese fra og opprette Karakterprotokoll for å skrive til
 		try
 		{
 			input = new Scanner (new File ("klasseliste.txt"));
 			output = new Formatter("Karakterprotokoll.txt");
 		}
-		catch (SecurityException se)
+		catch (SecurityException se)// om try ikke slår til
 		{
 			JOptionPane.showMessageDialog(
 					null, 
@@ -35,7 +35,7 @@ public class EndreKlasseliste
 					JOptionPane.PLAIN_MESSAGE);
 			System.exit(1);
 		}
-	}
+	}// slutt på metoden aapneFil
 	
 	public void lesFil()
 	{
@@ -59,6 +59,7 @@ public class EndreKlasseliste
 				elev.setSKar(elev.getKar1() + elev.getKar2() + elev.getKar3() + elev.getKar4() + elev.getKar5());
 				
 				if (elev.getFag() != null)
+				// hvis elev.getFag har innhold legg til i tekstfil
 				{
 					output.format("%s %s %s %d %d %d %d %d %s %2.2f\n",
 							elev.getElevForNavn(),
@@ -73,13 +74,14 @@ public class EndreKlasseliste
 							elev.getSKar());
 				}
 				else
+				// hvis ikke; utskrift til brukeren
 				{
 					JOptionPane.showMessageDialog(null,
 							"",
 							"Må ha en karakter.",
 							JOptionPane.PLAIN_MESSAGE);
 				}
-	
+				// legger til i tekstområde slik at brukeren får se 
 				tekstområde.append(
 						elev.getElevForNavn()
 						+ "\t"
@@ -100,7 +102,8 @@ public class EndreKlasseliste
 						+ "Gjennomsnittskarakter: "
 						+ elev.getSKar()
 						+ "\n");
-			}
+			}// while kjører så lenge det er noe å lese i tekstfilen
+			// utskrift til brukeren
 			JOptionPane.showMessageDialog(
 					null,
 					tekstområde,
@@ -127,7 +130,7 @@ public class EndreKlasseliste
 					JOptionPane.PLAIN_MESSAGE);
 			System.exit(1);
 		}
-	}
+	}// slutt på metoden lesFil
 	
 	public void lukkFil()
 	{

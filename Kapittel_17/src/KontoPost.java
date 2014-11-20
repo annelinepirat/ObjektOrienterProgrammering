@@ -18,7 +18,7 @@ public class KontoPost implements Serializable
 		setForNavn(fnavn);
 		setEtterNavn(enavn);
 		setBalanse(bal);
-	}
+	}// slik skal utskriften
 	
 	public void setKonto(int knt)
 	{
@@ -54,5 +54,5 @@ public class KontoPost implements Serializable
 	public double getBalanse()
 	{
 		return balanse;
-	}
-}
+	}// slutt på menge set/get 
+}//slutt på klasse

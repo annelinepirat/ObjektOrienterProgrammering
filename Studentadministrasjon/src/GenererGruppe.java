@@ -1,4 +1,12 @@
+/*Følgende utfordringer har jeg møtt på, da min kunnskap ikke strekker til: 
+ * Konstruktør til klassene main og student
+ * Å hente inn student-objektene i en array, og deretter hente informasjon ut fra denne arrayen.
+ * Å randomisere array med student-objekter + fordele randomisert array i grupperinger (bruke tekstområde her?)
+ * Takker for alle innspill/forslag til kode!!
+ */
+
 import java.io.File;
+import java.util.Random;
 import java.util.Scanner;
 import javax.swing.*;
 
@@ -18,11 +26,7 @@ public class GenererGruppe
 		this.valgtFag = fag;
 		this.mann = mann;
 	}
-//public static void main (String [] args)
-//{
-//	GenererGruppe hioaStudent = new GenererGruppe ("Anders", "Lind", 2013, "OOP", true);
-//	System.out.println("");
-//}
+
 //	Student student = new Student();// konstruktør
 
 	public void sortereKjonn() // start metode sortere kjønn
@@ -147,16 +151,17 @@ public class GenererGruppe
 		JOptionPane.showMessageDialog(null, utskrift);
 	}
 
-	private void sortereTilfeldig () // start metode sortere tilfeldig
+	public static void sortereTilfeldig (int [] a) // start metode sortere tilfeldig
 	{
 		
+	
+	
 	//	<JOptionPane-vindu - sp¯r om antall grupper> 
 	//	<get elevnavn/studentnummer, set elevnavn>
 	//	<legg alle elever i en array> 
 	//	<randomiser array>
 	//	<legg til i riktig antall grupper> // bruke tekstomrÂde (st¯rrelse pÂ tekstomrÂde lik antall grupper valgt) eller ny array her? tekstomrÂde best, mest ryddig?
 	}
-//} // slutt if-setning
 //<skriv ut valgt liste>
 
 } // slutt klasse

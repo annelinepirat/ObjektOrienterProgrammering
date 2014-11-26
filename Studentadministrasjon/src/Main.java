@@ -62,24 +62,24 @@ public class Main
 					System.exit(0);
 				}
 		}// slutt på else/if tester
-		while (valg.equals(null))// kjører en sjekk på om brukeren cancel og kommer da med en feilmelding og starter menyen igjen
-		{
-			int ja = JOptionPane.showOptionDialog(null, "Du valgte ikke noe å gjøre, vil du prøve igjen?",
-					"Feil", 
-					JOptionPane.YES_NO_OPTION, 
-					JOptionPane.QUESTION_MESSAGE, 
-					null, 
-					null, 
-					null);
-			if (ja == JOptionPane.YES_OPTION)
-			{
-				visMeny();
-			}
-			else
-			{
-				System.exit(0);
-			}
-		} // DENNE FUNKER IKKE MEN VIL HA DEN MED!
+//		while (valg.equals(null))// kjører en sjekk på om brukeren cancel og kommer da med en feilmelding og starter menyen igjen
+//		{
+//			int ja = JOptionPane.showOptionDialog(null, "Du valgte ikke noe å gjøre, vil du prøve igjen?",
+//					"Feil", 
+//					JOptionPane.YES_NO_OPTION, 
+//					JOptionPane.QUESTION_MESSAGE, 
+//					null, 
+//					null, 
+//					null);
+//			if (ja == JOptionPane.YES_OPTION)
+//			{
+//				visMeny();
+//			}
+//			else
+//			{
+//				System.exit(0);
+//			}
+//		} // DENNE FUNKER IKKE MEN VIL HA DEN MED!
 	}// slutt på visMeny-metode
 	
 	public void leggTilStudent()
@@ -206,9 +206,7 @@ public class Main
 		Student[] stud = null;
 		do
 		{
-			int valgtre = Integer.parseInt(
-					JOptionPane.showInputDialog(
-							null,
+			String valgtre = JOptionPane.showInputDialog(null,
 							"Skriv inn tallet på hva du vil gjøre\n"
 							+ "1: Sorter etter kjønn\n"
 							+ "2: Sorter etter fag\n"
@@ -216,36 +214,49 @@ public class Main
 							+ "4: Sorter alfabetisk\n"
 							+ "5: Lag tilfeldig sammensetting\n"
 							+ "6: Lag liste over de som er godkjent til eksamen\n"
-							+ "0: Avslutt"));
+							+ "0: Avslutt");
 			GenererGruppe kjor = new GenererGruppe(gruppe);
-			if (valgtre == 1)// sortere etter kjønn
+			if (valgtre.equals("1"))// sortere etter kjønn
 			{
 				kjor.sortereKjonn();
 				// kjør metode ... og returner verdi ...
 			}
-			else if (valgtre == 2)// sortere etter fag
+			else if (valgtre.equals("2"))// sortere etter fag
 			{
 				kjor.sortereFag();
 			}
-			else if (valgtre == 3)// sortere ettr studiestartår
+			else if (valgtre.equals("3"))// sortere etter studiestartår
 			{
 				kjor.sortereStudiestart();
 			}
-			else if (valgtre == 4)
+			else if (valgtre.equals("4"))// sorterer alfabetisk
 			{
-				GenererGruppe.sortereAlfabetisk(stud);
+				kjor.sortereAlfabetisk(stud);
 			}
-			else if (valgtre == 5)// sett sammen tilfeldig
+			else if (valgtre.equals("5"))// sett sammen tilfeldig
 			{	
-				GenererGruppe.sortereTilfeldig(stud);
+				kjor.sortereTilfeldig(stud);
 			}
-			else if (valgtre == 6)
+			else if (valgtre.equals("6"))// sorterer etter de som kan gå til eksamen
 			{
-				GenererGruppe.sortereGodkjent();
+				kjor.sortereGodkjent();
 			}
-			else if (valgtre == 0)// avslutt
+			else if (valgtre.equals("0"))// avslutter
 			{
 				System.exit(0); // Avslutt
+			}
+			else
+			{
+				igjen = JOptionPane.showOptionDialog(null, 
+						"Du skrev inn et valg som ikke finnes, prøve på nytt?",
+						"Lister",
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE, 
+						null, 
+						null, 
+						null);
+				if (igjen == JOptionPane.YES_OPTION)
+					lagDiverseGrupper();
 			}
 			igjen = JOptionPane.showOptionDialog(null,
 					"Vil du generere nye lister?", 

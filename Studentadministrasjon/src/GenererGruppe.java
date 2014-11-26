@@ -175,7 +175,7 @@ public class GenererGruppe
 		JOptionPane.showMessageDialog(null, utskrift);
 	}
 
-	public static void sortereGodkjent ()// Lager liste over eksamen som er kvalifisert til eksamen. 
+	public void sortereGodkjent ()// Lager liste over eksamen som er kvalifisert til eksamen. 
 	{
 		StringBuffer tekstomrade = new StringBuffer("Studenter kvalifisert til eksamen: \n");
 		
@@ -191,7 +191,7 @@ public class GenererGruppe
 			JOptionPane.showMessageDialog(null, utskrift);
 	} // slutt metode sortereStudiestart
 	
-	public static void sortereAlfabetisk (Student[] stud)
+	public void sortereAlfabetisk (Student[] stud)
 	{
 		StringBuffer tekstomrade = new StringBuffer("Alfabetisk liste over studenter: \n");
 
@@ -206,7 +206,7 @@ public class GenererGruppe
 	} // slutt metode sortereAlfabetisk
 	
 //	RIKTIG INITIALISERING AV ARRAY HER?
-	public static void sortereTilfeldig (Student[] stud) // start metode sortere tilfeldig. 
+	public void sortereTilfeldig (Student[] stud) // start metode sortere tilfeldig. 
 	{
 		StringBuffer tekstomrade = new StringBuffer("Studentgrupper tilfeldig \n");
 		
@@ -216,7 +216,7 @@ public class GenererGruppe
 
 		Collections.shuffle(Arrays.asList(stud)); // metode som "shuffler"/stokker om objektene i arrayen. 
 
-		//	Collections.shuffle(grp.hentStudenterAsVector()); // stokker om arrayen - FINN RIKTIG KONSTRUKTÿR FRA ANDRE KLASSER HER
+			//Collections.shuffle(grp.hentStudenterAsVector()); // stokker om arrayen - FINN RIKTIG KONSTRUKTÿR FRA ANDRE KLASSER HER
 
 
 		for (int i = 0; i <= antallGrupper; i++) // for-l¯kke som deler arrayen opp i grupper

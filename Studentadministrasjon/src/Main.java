@@ -38,7 +38,7 @@ public class Main
 		}
 		else if (valg.equals("3"))
 		{
-			new GUIMain(gruppe);
+			new GUIMain(gruppe);// HVA SKAL KALLES OPP HER???
 		}
 		else if (valg.equals("0"))// hvis brukeren skriver 0 så slår dette til
 		{

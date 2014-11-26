@@ -1,98 +1,117 @@
-/*Følgende utfordringer har jeg møtt på, da min kunnskap ikke strekker til: 
- * Konstruktør til klassene main og student
- * Å hente inn student-objektene i en array, og deretter hente informasjon ut fra denne arrayen.
- * Å randomisere array med student-objekter + fordele randomisert array i grupperinger (bruke tekstområde her?)
- * Takker for alle innspill/forslag til kode!!
- */
-
-import java.io.File;
-import java.util.Random;
-import java.util.Scanner;
 import javax.swing.*;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public class GenererGruppe 
-{
-	private String forNavn;
-	private String etterNavn;
-	private int studieStart;
-	private String valgtFag;
-	private boolean mann;
+{	
+	//LAGER EN ARRAY FOR ≈ HOLDE P≈ ALLE STUDENTENE
+	private static Student[] stud = null;
+	static String utskrift = ""; 
 
-	public GenererGruppe (String fornavn, String etternavn, int studiestart, String fag, boolean mann) // konstrukt¯r
+	//KONTRUKTÿR SOM FOR ≈ LAGE EN GENERERGRUPPE-OBJEKT SOM TAR I MOT ALLE STUDENTENE OG PLASSERER DISSE I ARRAYEN "stud".
+	public GenererGruppe(Gruppe grp)
 	{
-		this.forNavn = fornavn;
-		this.etterNavn = etternavn;
-		this.studieStart = studiestart;
-		this.valgtFag = fag;
-		this.mann = mann;
+		stud = grp.hentStudenterAsArray();
 	}
+	
 
-//	Student student = new Student();// konstruktør
-
-	public void sortereKjonn() // start metode sortere kjønn
+	public void sortereKjonn() // start metode sortere kj¯nn
 	{
-		Student [] stud = grp.hentStudenterAsArray();
-		JTextArea tekstomradeMann = new JTextArea();
-		tekstomradeMann.setText("Mann\n");
-		JTextArea tekstomradeDame = new JTextArea();
-		tekstomradeDame.setText("Dame\n");
-		JTextArea tekstomradeSamlet = new JTextArea();
-		tekstomradeSamlet.setText("Kjønn");
+
+		StringBuffer tekstomradeMann = new StringBuffer(); // se nÊrmere pÂ stringbuffer
+		StringBuffer tekstomradeDame = new StringBuffer();
+		StringBuffer tekstomradeSamlet = new StringBuffer("MANN\n");
 		
 		for (int i = 0; i < stud.length; i++)
 		{
-			if(stud[i].isMann() == mann)
+			if(stud[i].isMann() == true) //DENNE RETURNERER TRUE ELLER FALSE
 			{
-				tekstomradeMann.append(stud[i].getFornavn() + stud[i].getEtternavn() + "\n");
+				tekstomradeMann.append(stud[i].getFornavn() + " " +stud[i].getEtternavn() + "\n");
 			}
-			else if (stud[i].isMann() != mann)
+			else
 			{
 				tekstomradeDame.append(stud[i].getFornavn() + " " + stud[i].getEtternavn() + "\n");
 			}	
-		}
-		tekstomradeSamlet.append(tekstomradeMann + "\t" + tekstomradeDame + "\n");
-		String utskrift = tekstomradeSamlet + "";
+		}// slutt for-l¯kke
+
+		tekstomradeSamlet.append( tekstomradeMann);
+		tekstomradeSamlet.append("\n\nDAME\n");
+		tekstomradeSamlet.append( tekstomradeDame);
 		
+		utskrift = tekstomradeSamlet.toString();
 		JOptionPane.showMessageDialog(null, utskrift);
-	}
+	} // slutt metode sortereKj¯nn
 
 	public void sortereFag () // start metode sortere fag
 	{
+		StringBuffer tekstomrade1 = new StringBuffer("NORSK\n");// her tar vi h¯yde for at det kun er inntak om h¯sten
+		StringBuffer tekstomrade2 = new StringBuffer("ENGELSK\n");
+		StringBuffer tekstomrade3 = new StringBuffer("MATEMATIKK\n");
 		
-	//	<while-l¯kke?>
-	//	<get fag, set fag>
-	//	<initialiser if-setninger>
-	//	if FAG1
-	//		legg student.fornavn + student.etternavn i tekstomrÂde1
-	//	if FAG2
-	//		legg student.fornavn + student.etternavn i tekstomrÂde1
-
-	//		osv.
-	//<slutt if-setning>
-	//<slutt while>
-	}
+		int fag = Integer.parseInt(JOptionPane.showInputDialog(null,
+				"Skriv inn tallet pÂ hvilken fagklasse du vil se\n"
+				+ "1: Norsk \n"
+				+ "2: Engelsk \n"
+				+ "3: Matematikk \n"));
+		
+		if (fag == 1)
+		{
+			for (int i = 0; i < stud.length; i++)
+			{
+				if (stud[i].getFag().toLowerCase().equals("norsk")) // plukker ut studenter med faget Norsk. 
+				{
+					tekstomrade1.append(stud[i].getFornavn() + " " + stud[i].getEtternavn());
+					tekstomrade1.append("\n");
+				}
+			}
+			utskrift = tekstomrade1 + "";
+		}
+		else if (fag == 2)
+		{
+			for (int i = 0; i < stud.length; i++)
+			{
+				if (stud[i].getFag().toLowerCase().equals("engelsk"))  // plukker ut studenter med faget Engelsk. 
+				{
+					tekstomrade2.append(stud[i].getFornavn() + " " + stud[i].getEtternavn());
+					tekstomrade2.append("\n");
+				}
+			}
+			utskrift = tekstomrade2 + "";
+		}
+		else if (fag == 3)
+		{
+			for (int i = 0; i < stud.length; i++)
+			{
+				if (stud[i].getFag().toLowerCase().equals("matematikk"))  // plukker ut studenter med faget Matematikk.
+				{
+					tekstomrade3.append(stud[i].getFornavn() + " " + stud[i].getEtternavn());
+					tekstomrade3.append("\n");
+				}
+			}
+			utskrift = tekstomrade3 + "";
+		} // slutt if-l¯kke
+		JOptionPane.showMessageDialog(null, utskrift);
+	} // slutt metode sortereFag
 	
 	public void sortereStudiestart() // start metode sortere studiestart
 	{
-		Student [] stud = grp.hentStudenterAsArray();
-		JTextArea tekstomrade1 = new JTextArea();
-		tekstomrade1.setText("Høst 2010");// her tar vi høyde for at det kunn er inntak om høsten
-		JTextArea tekstomrade2 = new JTextArea();
-		tekstomrade2.setText("Høst 2011");
-		JTextArea tekstomrade3 = new JTextArea();
-		tekstomrade3.setText("Høst 2012");
-		JTextArea tekstomrade4 = new JTextArea();
-		tekstomrade4.setText("Høst 2013");
-		JTextArea tekstomrade5 = new JTextArea();
-		tekstomrade5.setText("Høst 2014");
+		//Student [] stud = grp.hentStudenterAsArray();
+		
+		StringBuffer tekstomrade1 = new StringBuffer("Høst 2010\n");// her tar vi h¯yde for at det kun er inntak om h¯sten
+		StringBuffer tekstomrade2 = new StringBuffer("Høst 2011\n");
+		StringBuffer tekstomrade3 = new StringBuffer("Høst 2012\n");
+		StringBuffer tekstomrade4 = new StringBuffer("Høst 2013\n");
+		StringBuffer tekstomrade5 = new StringBuffer("Høst 2014\n");
+		
 		String utskrift = "";
 		int valgAar = Integer.parseInt(JOptionPane.showInputDialog(null,
-				"Skriv inn tallet på hvilket årskull du vil se\n"
-				+ "1: 2010"
-				+ "2: 2011"
-				+ "3: 2012"
-				+ "4: 2013"
-				+ "5: 2014"));
+				"Skriv inn tallet pÂ hvilket Ârskull du vil se\n"
+				+ "1: 2010\t"
+				+ "2: 2011\t"
+				+ "3: 2012\t "
+				+ "4: 2013\t"
+				+ "5: 2014\t"));
 		if (valgAar == 1)
 		{
 			for (int i = 0; i < stud.length; i++)
@@ -100,6 +119,7 @@ public class GenererGruppe
 				if (stud[i].getStudiestart() == 2010)
 				{
 					tekstomrade1.append(stud[i].getFornavn() + " " + stud[i].getEtternavn());
+					tekstomrade1.append("\n");
 				}
 			}
 			utskrift = tekstomrade1 + "";
@@ -111,6 +131,7 @@ public class GenererGruppe
 				if (stud[i].getStudiestart() == 2011)
 				{
 					tekstomrade2.append(stud[i].getFornavn() + " " + stud[i].getEtternavn());
+					tekstomrade2.append("\n");
 				}
 			}
 			utskrift = tekstomrade2 + "";
@@ -119,9 +140,10 @@ public class GenererGruppe
 		{
 			for (int i = 0; i < stud.length; i++)
 			{
-				if (stud[i].getStudiestart() == 2010)
+				if (stud[i].getStudiestart() == 2012)
 				{
 					tekstomrade3.append(stud[i].getFornavn() + " " + stud[i].getEtternavn());
+					tekstomrade3.append("\n");
 				}
 			}
 			utskrift = tekstomrade3 + "";
@@ -130,9 +152,10 @@ public class GenererGruppe
 		{
 			for (int i = 0; i < stud.length; i++)
 			{
-				if (stud[i].getStudiestart() == 2010)
+				if (stud[i].getStudiestart() == 2013)
 				{
 					tekstomrade4.append(stud[i].getFornavn() + " " + stud[i].getEtternavn());
+					tekstomrade4.append("\n");
 				}
 			}
 			utskrift = tekstomrade4 + "";
@@ -141,9 +164,10 @@ public class GenererGruppe
 		{
 			for (int i = 0; i < stud.length; i++)
 			{
-				if (stud[i].getStudiestart() == 2010)
+				if (stud[i].getStudiestart() == 2014)
 				{
 					tekstomrade5.append(stud[i].getFornavn() + " " + stud[i].getEtternavn());
+					tekstomrade5.append("\n");
 				}
 			}
 			utskrift = tekstomrade5 + "";
@@ -151,17 +175,63 @@ public class GenererGruppe
 		JOptionPane.showMessageDialog(null, utskrift);
 	}
 
-	public static void sortereTilfeldig (int [] a) // start metode sortere tilfeldig
+	public static void sortereGodkjent ()// Lager liste over eksamen som er kvalifisert til eksamen. 
 	{
+		StringBuffer tekstomrade = new StringBuffer("Studenter kvalifisert til eksamen: \n");
 		
+		for (int i = 0; i < stud.length; i++)
+			{
+				if (stud[i].isGodkjent() == true) // Plukker ut elevene som er kvalifisert til eksamen. SJEKK VARIABEL.
+				{
+					tekstomrade.append(stud[i].getFornavn() + " " + stud[i].getEtternavn());
+					tekstomrade.append("\n");
+				}
+			}
+			utskrift = tekstomrade + "";
+			JOptionPane.showMessageDialog(null, utskrift);
+	} // slutt metode sortereStudiestart
 	
-	
-	//	<JOptionPane-vindu - sp¯r om antall grupper> 
-	//	<get elevnavn/studentnummer, set elevnavn>
-	//	<legg alle elever i en array> 
-	//	<randomiser array>
-	//	<legg til i riktig antall grupper> // bruke tekstomrÂde (st¯rrelse pÂ tekstomrÂde lik antall grupper valgt) eller ny array her? tekstomrÂde best, mest ryddig?
-	}
-//<skriv ut valgt liste>
+	public static void sortereAlfabetisk (Student[] stud)
+	{
+		StringBuffer tekstomrade = new StringBuffer("Alfabetisk liste over studenter: \n");
 
+		Arrays.sort( stud ); // metode som sorterer array. Men hva sorteres? fornavn? etternavn? Sjekk dette.
+
+		for ( int i = 0 ; i <= stud.length ; i++ ) // for-l¯kke som henter ut navnene til alle studentene i array. St¯rre eller lik!
+		{
+			tekstomrade.append(stud[i].getFornavn() + " " + stud[i].getEtternavn() + "\n"); // skriver ut navnene etterhvert som de blir sortert i array - er hvertfall tanken
+		} // slutt for-l¯kke
+		utskrift = tekstomrade + "";
+		JOptionPane.showMessageDialog(null, utskrift);
+	} // slutt metode sortereAlfabetisk
+	
+//	RIKTIG INITIALISERING AV ARRAY HER?
+	public static void sortereTilfeldig (Student[] stud) // start metode sortere tilfeldig. 
+	{
+		StringBuffer tekstomrade = new StringBuffer("Studentgrupper tilfeldig \n");
+		
+		// Skal det opprettes en egen array her for sortering, hvor jeg henter inn arrayen med objekter? Eller skal jeg fylle ny array med fornavn/etternavn og deretter sortere?
+		int antallGrupper = Integer.parseInt(JOptionPane.showInputDialog(null,
+				"Hvor mange grupper vil du sortere studentene i?\n"));
+
+		Collections.shuffle(Arrays.asList(stud)); // metode som "shuffler"/stokker om objektene i arrayen. 
+
+		//	Collections.shuffle(grp.hentStudenterAsVector()); // stokker om arrayen - FINN RIKTIG KONSTRUKTÿR FRA ANDRE KLASSER HER
+
+
+		for (int i = 0; i <= antallGrupper; i++) // for-l¯kke som deler arrayen opp i grupper
+		{
+			tekstomrade.append("Gruppe nr. " + i + "\n"); // her er tanken at hver gruppe skal legges til i et tekstomrÂde
+
+			for (int k = 0; k <= (stud.length / antallGrupper); k++) // for-l¯kke som skriver ut stokket antall arrayobjekter i hver gruppe
+			{
+				tekstomrade.append(stud[i].getFornavn() + " " + stud[i].getEtternavn() + "\n"); // hvordan skrive ut hvert navn her for deretter Â plassere dem i et tekstomrÂde?
+			} // slutt for-l¯kke
+			
+			tekstomrade.append("\n\n");
+
+		} // slutt for-l¯kke
+		utskrift = tekstomrade + "";
+		JOptionPane.showMessageDialog(null, utskrift);
+	}// slutt metode sortere tilfeldig
 } // slutt klasse

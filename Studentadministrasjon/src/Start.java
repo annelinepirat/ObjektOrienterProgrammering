@@ -3,12 +3,6 @@ public class Start
 {	
 	public static void main(String[] args) 
 	{
-//		new Main(Filbehandling.lastGruppe());
-		
-		Main kjør = new Main();
-		
-		
-		kjør.visMeny();
+		new Main(Filbehandling.lastGruppe());
 	}
-
 }

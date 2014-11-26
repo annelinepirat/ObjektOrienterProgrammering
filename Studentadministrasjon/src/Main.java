@@ -1,171 +1,175 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.util.Formatter;
+// importerer ulike klasser 
 import java.util.FormatterClosedException;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class Main
 {
-	private Formatter output;// gjør det mulig å skrive til fil
-	private Scanner input;// gjør det mulig å lese fra fil
+	private Gruppe gruppe = null; //Gjør gruppeobjektet (med alle studentene) tilgjengelig for hele Main-metoden.
 	
+	public Main(Gruppe grp)// sender inn grp fra klassen Gruppe
+	{
+		//Setter den lokale gruppevariablen til gruppa som er lastet fra fila.
+		gruppe = grp;
+		
+		//Viser menyen (starter programmet)
+		visMeny();
+	}
+
 	public void visMeny()
 	{
-		int valg = Integer.parseInt(
-				JOptionPane.showInputDialog(
+		// gir brukeren ulike valg som kan taes
+		String valg =JOptionPane.showInputDialog(
 						null,
 						"Skriv inn tallet på hva du vil gjøre\n"
 						+ "1: Legg til student\n"
 						+ "2: Generer gruppe\n"
-						+ "0: Avslutt"));
+						+ "3: Endre student\n"
+						+ "0: Avslutt");
 		
-		if (valg == 1)
+		if (valg.equals("1"))// hvis brukeren skriver 1 slår denne til
 		{
-			aapneFil();// åpner filen slik at man 
-			lesFil();
 			leggTilStudent();// starter opp metoden aapneFil og leggTilStudent
-			lukkFil();
+			Filbehandling.lagreGruppe(gruppe);// etter hver gang leggTilStudent har kjørt så sendes de inn i filbehandlings-klassen og lagres i objekter der
 		}
-		else if (valg == 2)
+		else if (valg.equals("2"))// hvis brukeren skriver 2 slår dette til
 		{
-			lagDiverseGrupper();
-			//genererGruppe();// starter metoden genererStudentliste
-		}else if (valg == 0)
+			lagDiverseGrupper();// starter metoden lagDiverseGrupper-GenererGruppe
+		}
+		else if (valg.equals("3"))
+		{
+			new GUIMain(gruppe);
+		}
+		else if (valg.equals("0"))// hvis brukeren skriver 0 så slår dette til
 		{
 			System.exit(0); // Avslutt
 		}
-
-	}
-	
-	public void aapneFil()
-	{
-		try
+		else
 		{
-			input = new Scanner (new File ("Studentliste.txt"));//leser inn fra filen
-			if (input.hasNext())
-			{
-				System.out.println("Hei");
-			}
-			else
-			output = new Formatter ("Studentliste.txt");// skriver til filen
-		}
-		catch (SecurityException se)// hvis ikke try slår igjennom sjekk om den er låst eller ei
-		{
-			JOptionPane.showMessageDialog(
-					null, 
-					"", 
-					"Du har ikke skriverettigheter til denne fila", 
-					JOptionPane.PLAIN_MESSAGE);// MessageDialog 
-		}
-		catch (FileNotFoundException fnfe)// hvis ikke try slår igjennom sjekk om fila eksisterer
-		{
-			JOptionPane.showMessageDialog(
-					null, 
-					"", 
-					"Feil ved åpning av fila", 
-					JOptionPane.PLAIN_MESSAGE);// MessageDialog
-		}
-	}// slutt på metoden aapneFil
-	
-	public void lesFil()
-	{
-		Student stud = new Student(null, 0, false, null, null, null);
-		
-		try
-		{
-			while(input.hasNext())
-			{
-				stud.setFornavn(input.next());
-				stud.setEtternavn(input.next());
-				stud.setKjonn(input.next());
-				stud.setStudiestart(Integer.parseInt(input.next()));
-				stud.setFag(input.next());
-				
-				if (stud.getFornavn() != null)
+				int ja = JOptionPane.showOptionDialog(null, "Du skrev ikke riktig, prøve igjen?",
+						"Feil", 
+						JOptionPane.YES_NO_OPTION, 
+						JOptionPane.QUESTION_MESSAGE, 
+						null, 
+						null, 
+						null);
+				if (ja == JOptionPane.YES_OPTION)
 				{
-					output.format("%s %s %s %d %s", 
-							stud.getFornavn(),
-							stud.getEtternavn(),
-							stud.getKjonn(),
-							stud.getStudiestart(),
-							stud.getFag());
+					visMeny();
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null,
-							"",
-							"Må ha et navn.",
-							JOptionPane.PLAIN_MESSAGE);
+					System.exit(0);
 				}
+		}// slutt på else/if tester
+		while (valg.equals(null))// kjører en sjekk på om brukeren cancel og kommer da med en feilmelding og starter menyen igjen
+		{
+			int ja = JOptionPane.showOptionDialog(null, "Du valgte ikke noe å gjøre, vil du prøve igjen?",
+					"Feil", 
+					JOptionPane.YES_NO_OPTION, 
+					JOptionPane.QUESTION_MESSAGE, 
+					null, 
+					null, 
+					null);
+			if (ja == JOptionPane.YES_OPTION)
+			{
+				visMeny();
 			}
-		}
-		catch (NoSuchElementException elementException)// sjekker om det er noe feil
-		{
-			JOptionPane.showMessageDialog(
-					null, 
-					"Upassende format i fila", 
-					null, 
-					JOptionPane.PLAIN_MESSAGE);
-			input.close();
-			System.exit(1);
-		}
-		catch (IllegalStateException stateException)// sjekker om det er noe feil
-		{
-			JOptionPane.showMessageDialog(
-					null, 
-					"Feil i lesing fra fil", 
-					null, 
-					JOptionPane.PLAIN_MESSAGE);
-			System.exit(1);
-		}	
-	}
+			else
+			{
+				System.exit(0);
+			}
+		} // DENNE FUNKER IKKE MEN VIL HA DEN MED!
+	}// slutt på visMeny-metode
 	
 	public void leggTilStudent()
 	{	
-		Student student = new Student(null, 0, false, null, null, null);
-		int svar;
+		Student student = null;// oppretter en konstruktør til klassen Student
+		boolean mann = false;// gjør mann tilgjengelig gjennom hele metoden
+		int svar;// gjør svar tilgjengelig gjennom hele metoden
 		
-		do//sjekk om dette overskriver det som er scannet fra txt.fila?
+		do// starter en løkke der brukeren kan skrive inn input
 		{
-			String elevFornavn = JOptionPane.showInputDialog(null, "Skriv inn fornavnet på eleven", "Fornavn", JOptionPane.QUESTION_MESSAGE);
-			String elevEtternavn = JOptionPane.showInputDialog(null, "Skriv inn etternavn på eleven", "Etternavn", JOptionPane.QUESTION_MESSAGE);
-			String elevKjonn = JOptionPane.showInputDialog(null, "Skriv inn hvilket kjønn, mann eller dame?", "Kjønn", JOptionPane.QUESTION_MESSAGE);
-			boolean mann;
-			if (elevKjonn.toLowerCase().equals("mann"))
-				mann = true;
-			else
-				mann = false;
-			int studieStart = Integer.parseInt(JOptionPane.showInputDialog(null, "Hvilket år startet studenten?", "Studiestart", JOptionPane.QUESTION_MESSAGE));
-			String fagomrade = JOptionPane.showInputDialog(null, "Hvilket fag har studenten?", "Fagområde", JOptionPane.QUESTION_MESSAGE);
-			
+			student = new Student();// kaller opp Studentklassen
+			String elevFornavn = JOptionPane.showInputDialog(null, "Skriv inn fornavnet på eleven", "Fornavn", JOptionPane.QUESTION_MESSAGE);// fornavn fra brukeren
+			while (elevFornavn == null)// sjekker om brukeren trykker cancel og skriver ut feilmelding og starter på nytt
+			{
+				JOptionPane.showMessageDialog(null, "Må ha et fornavn");
+				elevFornavn = JOptionPane.showInputDialog(null, "Skriv inn fornavnet på eleven", "Fornavn", JOptionPane.QUESTION_MESSAGE);// fornavn fra brukeren
+			}
+			while (elevFornavn == "" || elevFornavn.isEmpty())// hvis brukeren lar input stå tomt så sett fornanv til error
+			{
+				JOptionPane.showMessageDialog(null, "Må ha et fornavn");
+				elevFornavn = JOptionPane.showInputDialog(null, "Skriv inn fornavnet på eleven", "Fornavn", JOptionPane.QUESTION_MESSAGE);// fornavn fra brukeren
+			}
+			String elevEtternavn = JOptionPane.showInputDialog(null, "Skriv inn etternavn på eleven", "Etternavn", JOptionPane.QUESTION_MESSAGE);// input fra brukeren
+			while (elevEtternavn == null)// sjekker om brukeren trykker cancel og skriver ut feilmelding og starter på nytt
+			{
+				JOptionPane.showMessageDialog(null, "Må ha et etternavn");
+				elevEtternavn = JOptionPane.showInputDialog(null, "Skriv inn etternavn på eleven", "Etternavn", JOptionPane.QUESTION_MESSAGE);// etternavn fra brukeren
+			}
+			while (elevEtternavn == "" || elevEtternavn.isEmpty())// hvis brukeren lar input stå tomt så sett etternavn til error
+			{
+				JOptionPane.showMessageDialog(null, "Må ha et etternavn");
+				elevEtternavn = JOptionPane.showInputDialog(null, "Skriv inn etternavn på eleven", "Etternavn", JOptionPane.QUESTION_MESSAGE);// etternavn fra brukeren
+			}
+			String elevKjonn = JOptionPane.showInputDialog(null, "Skriv inn hvilket kjønn, mann eller dame?", "Kjønn", JOptionPane.QUESTION_MESSAGE);// input fra brukeren
+			if (elevKjonn.toLowerCase().equals("mann"))// sjekker om brukeren har skrevet inn mann
+				mann = true;// setter da mann til true
+			else// sjekker om brukeren har skrevet inn dame
+				mann = false;// setter da mann til false
+			String studieStart = JOptionPane.showInputDialog(null, "Hvilket år startet studenten?", "Studiestart", JOptionPane.QUESTION_MESSAGE);// input fra brukeren
+			while (studieStart == null)// hvis brukeren trykker cancel skriv ut beskjed og ny input
+			{
+				JOptionPane.showMessageDialog(null, "Må ha et studiestartår!");
+				studieStart = JOptionPane.showInputDialog(null, "Hvilket år startet studenten?", "Studiestart", JOptionPane.QUESTION_MESSAGE);// input fra brukeren
+			}
+			while (studieStart == "" || studieStart.isEmpty())// hvis brukeren lar input stå tom skriv error
+			{
+				JOptionPane.showMessageDialog(null, "Må ha et studiestartår!");
+				studieStart = JOptionPane.showInputDialog(null, "Hvilket år startet studenten?", "Studiestart", JOptionPane.QUESTION_MESSAGE);// input fra brukeren
+			}
+			String fagomrade = JOptionPane.showInputDialog("Velg nr. for faget til studenten:\n"
+					+ "1. Norsk\n"
+					+ "2. Engelsk\n"
+					+ "3. Matematikk");
+			while (fagomrade == null)
+			{
+				JOptionPane.showMessageDialog(null, "Må ha et fag.");
+				fagomrade = JOptionPane.showInputDialog("Velg nr. for faget til studenten:\n"
+						+ "1. Norsk\n"
+						+ "2. Engelsk\n"
+						+ "3. Matematikk");
+			}
+			while (fagomrade == "" || fagomrade.isEmpty())
+			{
+				JOptionPane.showMessageDialog(null, "Må ha et fag.");
+				fagomrade = JOptionPane.showInputDialog("Velg nr. for faget til studenten:\n"
+						+ "1. Norsk\n"
+						+ "2. Engelsk\n"
+						+ "3. Matematikk");
+			}
 			
 			try
 			{
 				student.setFornavn(elevFornavn);
 				student.setEtternavn(elevEtternavn);
-				student.setKjonn(elevKjonn);
+				student.setKjonn(mann);
 				student.setStudiestart(studieStart);
-				student.setFag(fagomrade);			
+				if (fagomrade.equals("1"))
+				{
+					student.setFag("Norsk");// her bestemmes det hvilket fag studenten har
+				}
+				else if (fagomrade.equals("2"))
+				{
+					student.setFag("Engelsk");
+				}
+				else if (fagomrade.equals("3"))
+				{
+					student.setFag("Matematikk");
+				}
 
-				if (student.getFornavn() != null)
-				{
-					output.format("%s %s %s %d %s\n",
-							student.getFornavn(),
-							student.getEtternavn(),
-							student.getKjonn(),
-							student.getStudiestart(),
-							student.getFag());
-				}
-				else
-				{
-					JOptionPane.showMessageDialog(null,
-							"",
-							"Må ha et elevnavn.",
-							JOptionPane.PLAIN_MESSAGE);
-				}
+				gruppe.leggTilStudent(student);
 			}
 			catch (FormatterClosedException fce)// hvis try ikke slår til - feilmelding
 			{
@@ -193,52 +197,65 @@ public class Main
 					null, 
 					null);
 		}while (svar == JOptionPane.YES_OPTION);
+		visMeny();
 	}// slutt på metoden leggTilStudent
-	
-	public void lukkFil()
-	{
-		if(input != null)
-			input.close();
-		if(output != null)
-			output.close();
-	}// slutt på metoden lukk fil
 
 	public void lagDiverseGrupper()
 	{
-		int valgTre = Integer.parseInt(
-				JOptionPane.showInputDialog(
-						null,
-						"Skriv inn tallet på hva du vil gjøre\n"
-						+ "1: Sorter etter kjønn\n"
-						+ "2: Sorter etter fag\n"
-						+ "3: Sorter etter studiestart\n"
-						+ "4: Lag tilfeldig sammensetting\n"
-						+ "0: Avslutt"));
-		GenererGruppe kjor = new GenererGruppe();
-		if (valgTre == 1)
+		int igjen;
+		Student[] stud = null;
+		do
 		{
-			kjor.sortereKjonn();
-			// kjør metode ... og returner verdi ...
-		}
-		else if (valgTre == 2)
-		{
-			int velgFag = Integer.parseInt(JOptionPane.showInputDialog(
-					null,
-					"Skriv inn tallet på det faget du har:\n"
-					+ "1:"))
-			// kjør metode ... og returner verdi ...
-		}
-		else if (valgTre == 3)
-		{
-			// kjør metode ... og returner verdi...	
-		}
-		else if (valgTre == 4)
-		{
-			// kjør metode ... og returner verdi ...
-		}
-		else if (valgTre == 0)
-		{
-			System.exit(0); // Avslutt
-		}
+			int valgtre = Integer.parseInt(
+					JOptionPane.showInputDialog(
+							null,
+							"Skriv inn tallet på hva du vil gjøre\n"
+							+ "1: Sorter etter kjønn\n"
+							+ "2: Sorter etter fag\n"
+							+ "3: Sorter etter studiestart\n"
+							+ "4: Sorter alfabetisk\n"
+							+ "5: Lag tilfeldig sammensetting\n"
+							+ "6: Lag liste over de som er godkjent til eksamen\n"
+							+ "0: Avslutt"));
+			GenererGruppe kjor = new GenererGruppe(gruppe);
+			if (valgtre == 1)// sortere etter kjønn
+			{
+				kjor.sortereKjonn();
+				// kjør metode ... og returner verdi ...
+			}
+			else if (valgtre == 2)// sortere etter fag
+			{
+				kjor.sortereFag();
+			}
+			else if (valgtre == 3)// sortere ettr studiestartår
+			{
+				kjor.sortereStudiestart();
+			}
+			else if (valgtre == 4)
+			{
+				GenererGruppe.sortereAlfabetisk(stud);
+			}
+			else if (valgtre == 5)// sett sammen tilfeldig
+			{	
+				GenererGruppe.sortereTilfeldig(stud);
+			}
+			else if (valgtre == 6)
+			{
+				GenererGruppe.sortereGodkjent();
+			}
+			else if (valgtre == 0)// avslutt
+			{
+				System.exit(0); // Avslutt
+			}
+			igjen = JOptionPane.showOptionDialog(null,
+					"Vil du generere nye lister?", 
+					"Lister",
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE, 
+					null, 
+					null, 
+					null);
+		}while(igjen == JOptionPane.YES_OPTION);
+		System.exit(0);
 	}
 }

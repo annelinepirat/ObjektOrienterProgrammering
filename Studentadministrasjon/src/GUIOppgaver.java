@@ -10,6 +10,17 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+
+/*
+ * GUIOppgaver.class
+ * 
+ * Hovedvindu for Â vise alle oppgaver en student har levert. * 
+ * 
+ * LAGET AV ÿYSTEIN MÿRKESDAL
+ * 
+ */
+
+
 public class GUIOppgaver extends Dialog implements MouseListener{
 	
 	private JPanel panelEast = new JPanel(new GridLayout(0,1));
@@ -33,21 +44,21 @@ public class GUIOppgaver extends Dialog implements MouseListener{
 	}
 
 	
-	protected void setup(){ //Ordner vinduet klart til f�rstegangsvisning
-		super.setup(); //Kj�rer setup-metoden fra Dialog-klassen (som denne klassen arver fra)
+	protected void setup(){ //Ordner vinduet klart til f¯rstegangsvisning
+		super.setup(); //Kj¯rer setup-metoden fra Dialog-klassen (som denne klassen arver fra)
 		this.setTitle(stud.getFornavn() + " - Oppgaveadministrasjon");
 		this.setSize(320,240);
 		this.setModal(true);
 
 		
-		//Gj�r klar listen med oppgaver
+		//Gj¯r klar listen med oppgaver
 		updateListe();		
 		listOppgaver = new JList(listModel);		
 		scrollOppgaver = new JScrollPane(listOppgaver);
 		
 		/*listOppgaver = new JList(stud.getOppgaver());
 		listOppgaver.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); //Lar deg kun velge en og en ting i lista.
-		scrollOppgaver = new JScrollPane(listOppgaver); //Skrur p� scrollbar*/
+		scrollOppgaver = new JScrollPane(listOppgaver); //Skrur pÂ scrollbar*/
 		
 		//Legg alle komponenter og knapper til paneler
 		panelEast.add(btnLeggTilOppgave);
@@ -66,18 +77,18 @@ public class GUIOppgaver extends Dialog implements MouseListener{
 		btnLukk.addActionListener(this);
 		listOppgaver.addMouseListener(this);
 		
-		//Sentrer dialogen p� PC-skjermen
+		//Sentrer dialogen pÂ PC-skjermen
 		centerScreen();
 		
 	}
 	
-	public void actionPerformed(ActionEvent ae) { //Tar h�nd om hva som skjer n�r noe blir klikket p�
+	public void actionPerformed(ActionEvent ae) { //Tar hÂnd om hva som skjer nÂr noe blir klikket pÂ
 		
 		if (ae.getSource() == btnLeggTilOppgave){
 			new GUIOppgave(stud);
 			updateListe();		
 		}else if (ae.getSource() == btnRedigerOppgave){
-			new GUIOppgave( getValgteOppgave()); //�pner et oppgavevindu, sender med valgte oppgave.
+			new GUIOppgave( getValgteOppgave()); //≈pner et oppgavevindu, sender med valgte oppgave.
 			updateListe();		
 		}else if (ae.getSource() == btnSlettOppgave){
 			stud.getOppgaverAsVector().removeElementAt(listOppgaver.getSelectedIndex()); //Sletter valge oppgaven
@@ -87,7 +98,7 @@ public class GUIOppgaver extends Dialog implements MouseListener{
 		}
 	}
 
-	private Oppgave getValgteOppgave(){
+	private Oppgave getValgteOppgave(){ //Returnerer oppgaveobjektet som tilsvarer oppgaven som er valgt i lista.
 		return stud.getOppgaverAsVector().elementAt( listOppgaver.getSelectedIndex());
 	}
 
@@ -103,9 +114,9 @@ public class GUIOppgaver extends Dialog implements MouseListener{
 	}
 	
 	
-	public void mouseClicked(MouseEvent me) {
+	public void mouseClicked(MouseEvent me) { //Tar hÂnd om museklikk
 		  if (me.getClickCount() == 2) {
-				new GUIOppgave( getValgteOppgave()); //�pner et oppgavevindu, sender med valgte oppgave.
+				new GUIOppgave( getValgteOppgave()); //≈pner et oppgavevindu, sender med valgte oppgave.
 				updateListe();		
 			 }		
 	}

@@ -26,11 +26,13 @@ public class Main
 						+ "2: Generer gruppe\n"
 						+ "3: Endre student\n"
 						+ "0: Avslutt");
-		
+		if (valg == null)// sjekker om brukeren trykker på cancel og gir mulighet til å starte på nytt
+		{
+				System.exit(0);
+		}
 		if (valg.equals("1"))// hvis brukeren skriver 1 slår denne til
 		{
 			leggTilStudent();// starter opp metoden aapneFil og leggTilStudent
-			Filbehandling.lagreGruppe(gruppe);// etter hver gang leggTilStudent har kjørt så sendes de inn i filbehandlings-klassen og lagres i objekter der
 		}
 		else if (valg.equals("2"))// hvis brukeren skriver 2 slår dette til
 		{
@@ -38,13 +40,13 @@ public class Main
 		}
 		else if (valg.equals("3"))
 		{
-			new GUIMain(gruppe);// HVA SKAL KALLES OPP HER???
+			new GUIMain(gruppe, this);// HVA SKAL KALLES OPP HER???
 		}
 		else if (valg.equals("0"))// hvis brukeren skriver 0 så slår dette til
 		{
 			System.exit(0); // Avslutt
 		}
-		else
+		else// sjekker om brukeren skriver inn noe feil eller trykker ok/kryss og gir brukeren mulighet til å starte på nytt
 		{
 				int ja = JOptionPane.showOptionDialog(null, "Du skrev ikke riktig, prøve igjen?",
 						"Feil", 
@@ -62,24 +64,6 @@ public class Main
 					System.exit(0);
 				}
 		}// slutt på else/if tester
-//		while (valg.equals(null))// kjører en sjekk på om brukeren cancel og kommer da med en feilmelding og starter menyen igjen
-//		{
-//			int ja = JOptionPane.showOptionDialog(null, "Du valgte ikke noe å gjøre, vil du prøve igjen?",
-//					"Feil", 
-//					JOptionPane.YES_NO_OPTION, 
-//					JOptionPane.QUESTION_MESSAGE, 
-//					null, 
-//					null, 
-//					null);
-//			if (ja == JOptionPane.YES_OPTION)
-//			{
-//				visMeny();
-//			}
-//			else
-//			{
-//				System.exit(0);
-//			}
-//		} // DENNE FUNKER IKKE MEN VIL HA DEN MED!
 	}// slutt på visMeny-metode
 	
 	public void leggTilStudent()
@@ -92,62 +76,94 @@ public class Main
 		{
 			student = new Student();// kaller opp Studentklassen
 			String elevFornavn = JOptionPane.showInputDialog(null, "Skriv inn fornavnet på eleven", "Fornavn", JOptionPane.QUESTION_MESSAGE);// fornavn fra brukeren
-			while (elevFornavn == null)// sjekker om brukeren trykker cancel og skriver ut feilmelding og starter på nytt
+			if (elevFornavn == null || elevFornavn == "")// sjekker om brukeren trykker cancel og skriver ut feilmelding og starter på nytt
 			{
-				JOptionPane.showMessageDialog(null, "Må ha et fornavn");
-				elevFornavn = JOptionPane.showInputDialog(null, "Skriv inn fornavnet på eleven", "Fornavn", JOptionPane.QUESTION_MESSAGE);// fornavn fra brukeren
+				System.exit(0);
 			}
-			while (elevFornavn == "" || elevFornavn.isEmpty())// hvis brukeren lar input stå tomt så sett fornanv til error
+			if (elevFornavn.isEmpty())// hvis brukeren lar input stå tomt så sett fornanv til error
 			{
-				JOptionPane.showMessageDialog(null, "Må ha et fornavn");
-				elevFornavn = JOptionPane.showInputDialog(null, "Skriv inn fornavnet på eleven", "Fornavn", JOptionPane.QUESTION_MESSAGE);// fornavn fra brukeren
+				elevFornavn = JOptionPane.showInputDialog(null, "Må ha et fornavn, skriv inn på nytt");
 			}
 			String elevEtternavn = JOptionPane.showInputDialog(null, "Skriv inn etternavn på eleven", "Etternavn", JOptionPane.QUESTION_MESSAGE);// input fra brukeren
-			while (elevEtternavn == null)// sjekker om brukeren trykker cancel og skriver ut feilmelding og starter på nytt
+			if (elevEtternavn == null || elevEtternavn == "")// sjekker om brukeren trykker cancel og skriver ut feilmelding og starter på nytt
 			{
-				JOptionPane.showMessageDialog(null, "Må ha et etternavn");
-				elevEtternavn = JOptionPane.showInputDialog(null, "Skriv inn etternavn på eleven", "Etternavn", JOptionPane.QUESTION_MESSAGE);// etternavn fra brukeren
+				System.exit(0);
 			}
-			while (elevEtternavn == "" || elevEtternavn.isEmpty())// hvis brukeren lar input stå tomt så sett etternavn til error
+			if (elevEtternavn.isEmpty())// hvis brukeren lar input stå tomt så sett etternavn til error
 			{
-				JOptionPane.showMessageDialog(null, "Må ha et etternavn");
-				elevEtternavn = JOptionPane.showInputDialog(null, "Skriv inn etternavn på eleven", "Etternavn", JOptionPane.QUESTION_MESSAGE);// etternavn fra brukeren
+				elevEtternavn = JOptionPane.showInputDialog(null, "Må ha et etternav, skriv inn på nytt");
 			}
 			String elevKjonn = JOptionPane.showInputDialog(null, "Skriv inn hvilket kjønn, mann eller dame?", "Kjønn", JOptionPane.QUESTION_MESSAGE);// input fra brukeren
+			if (elevKjonn == null || elevKjonn == "")
+			{
+				System.exit(0);
+			}
+			if (elevKjonn.isEmpty())
+			{
+				elevKjonn = JOptionPane.showInputDialog(null, "Må ha et kjønn, skriv inn på nytt");
+			}
 			if (elevKjonn.toLowerCase().equals("mann"))// sjekker om brukeren har skrevet inn mann
 				mann = true;// setter da mann til true
-			else// sjekker om brukeren har skrevet inn dame
+			else// sjekker om brukeren har skrevet inn noe annet enn mann
 				mann = false;// setter da mann til false
 			String studieStart = JOptionPane.showInputDialog(null, "Hvilket år startet studenten?", "Studiestart", JOptionPane.QUESTION_MESSAGE);// input fra brukeren
-			while (studieStart == null)// hvis brukeren trykker cancel skriv ut beskjed og ny input
+			if (studieStart == null || studieStart == "")// hvis brukeren trykker cancel skriv ut beskjed og ny input
 			{
-				JOptionPane.showMessageDialog(null, "Må ha et studiestartår!");
-				studieStart = JOptionPane.showInputDialog(null, "Hvilket år startet studenten?", "Studiestart", JOptionPane.QUESTION_MESSAGE);// input fra brukeren
+				System.exit(0);
 			}
-			while (studieStart == "" || studieStart.isEmpty())// hvis brukeren lar input stå tom skriv error
+			while (studieStart.isEmpty())// hvis brukeren lar input stå tom start på nytt
 			{
-				JOptionPane.showMessageDialog(null, "Må ha et studiestartår!");
-				studieStart = JOptionPane.showInputDialog(null, "Hvilket år startet studenten?", "Studiestart", JOptionPane.QUESTION_MESSAGE);// input fra brukeren
+				studieStart = JOptionPane.showInputDialog(null, "Må ha et studieår, skriv inn på nytt.");
+				if (studieStart == null || studieStart == "")
+				{
+					System.exit(0);
+				}
 			}
+			int studStart = Integer.parseInt(studieStart);
+			if (studStart < 2010 || studStart > 2014)
+			{
+				do
+				{
+					studieStart = JOptionPane.showInputDialog(null, "Studenter som går på dette studiet har startet mellom 2010 og 2014, skriv inn årstall på nytt.");
+					if (studieStart == null || studieStart == "")
+					{
+						System.exit(0);
+					}
+					studStart = Integer.parseInt(studieStart);
+				}while (studStart < 2010 || studStart > 2014);
+			}
+			
 			String fagomrade = JOptionPane.showInputDialog("Velg nr. for faget til studenten:\n"
 					+ "1. Norsk\n"
 					+ "2. Engelsk\n"
-					+ "3. Matematikk");
-			while (fagomrade == null)
+					+ "3. Matematikk");	
+			if (fagomrade == null || fagomrade == "")
 			{
-				JOptionPane.showMessageDialog(null, "Må ha et fag.");
-				fagomrade = JOptionPane.showInputDialog("Velg nr. for faget til studenten:\n"
+				System.exit(0);
+			}
+			if (fagomrade.isEmpty())
+			{
+				fagomrade = JOptionPane.showInputDialog("Må ha et fag, prøv på nytt.\n"
 						+ "1. Norsk\n"
 						+ "2. Engelsk\n"
 						+ "3. Matematikk");
 			}
-			while (fagomrade == "" || fagomrade.isEmpty())
+			int fag = Integer.parseInt(fagomrade);
+			if (fag < 1 || fag > 3)
 			{
-				JOptionPane.showMessageDialog(null, "Må ha et fag.");
+				do
+				{
+				JOptionPane.showMessageDialog(null, "Feil nr, prøv igjen.");
 				fagomrade = JOptionPane.showInputDialog("Velg nr. for faget til studenten:\n"
 						+ "1. Norsk\n"
 						+ "2. Engelsk\n"
 						+ "3. Matematikk");
+				if (fagomrade == null || fagomrade == "")
+				{
+					System.exit(0);
+				}
+				fag = Integer.parseInt(fagomrade);
+				}while (fag < 1 || fag > 3);
 			}
 			
 			try
@@ -170,6 +186,7 @@ public class Main
 				}
 
 				gruppe.leggTilStudent(student);
+				Filbehandling.lagreGruppe(gruppe);// etter hver gang leggTilStudent har kjørt så sendes de inn i filbehandlings-klassen og lagres i objekter der
 			}
 			catch (FormatterClosedException fce)// hvis try ikke slår til - feilmelding
 			{
@@ -231,11 +248,11 @@ public class Main
 			}
 			else if (valgtre.equals("4"))// sorterer alfabetisk
 			{
-				kjor.sortereAlfabetisk(stud);
+				kjor.sortereAlfabetisk(gruppe.hentStudenterAsArray());
 			}
 			else if (valgtre.equals("5"))// sett sammen tilfeldig
 			{	
-				kjor.sortereTilfeldig(stud);
+				kjor.sortereTilfeldig(gruppe.hentStudenterAsArray());
 			}
 			else if (valgtre.equals("6"))// sorterer etter de som kan gå til eksamen
 			{

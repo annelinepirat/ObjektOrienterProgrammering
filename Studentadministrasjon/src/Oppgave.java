@@ -62,6 +62,4 @@ public class Oppgave implements Serializable{
 	public boolean isGodkjent(){//returnerer true hvis oppgaven er godkjent.
 		return godkjent;
 	}
-	
-
 }

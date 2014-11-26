@@ -1,146 +1,89 @@
 import java.awt.BorderLayout;
-import java.awt.Dialog;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class GUIMain extends Dialog implements MouseListener{
+
+/*
+ * GUIMain.class
+ * 
+ * Hovedvinduet for Â utf¯re endringer pÂ studenter.
+ * 
+ * LAGET AV ÿYSTEIN MÿRKESDAL
+ * 
+ * 
+ * 
+ */
+
+public class GUIMain extends Dialog implements MouseListener, WindowListener{
 
 	
 	//Main
 	//Vis valg (legg til studenter ELLER lag lister)
 	//Hvis legg til studenter
-	//--Sp�r om informasjon, lag nytt studentobjekt
+	//--Sp¯r om informasjon, lag nytt studentobjekt
 	//Hvis lag lister
-	//--Sp�r hva slags liste, s� skriv ut.
+	//--Sp¯r hva slags liste, sÂ skriv ut.
 	
 	private Gruppe gruppe = null;
-	
-	private JPanel panelEast = new JPanel(new GridLayout(0,1));
 	
 	private JList listStudenter = null;
 	private DefaultListModel listModel = new DefaultListModel();
 	private JScrollPane scrollStudenter = null;
 	
-	private JButton btnLeggTilElev = new JButton("Legg til elev");
 	private JButton btnRedigerElev = new JButton("Rediger elev og oppgaver");
-	private JButton btnLagGruppe = new JButton("Lag gruppe");
+	private Main m = null;
 	
-	
-	public GUIMain(Gruppe grp){
+	public GUIMain(Gruppe grp, Main m){
 		gruppe = grp;
-		
-		//visMeny();
+		this.m = m;
 		setup();
 		
 		this.setVisible(true);
 	}
 	
-	protected void setup(){ //Ordner vinduet klart til f�rstegangsvisning
-		super.setup(); //Kj�rer setup-metoden fra Dialog-klassen (som denne klassen arver fra)
+	protected void setup(){ //Ordner vinduet klart til f¯rstegangsvisning
+		super.setup(); //Kj¯rer setup-metoden fra Dialog-klassen (som denne klassen arver fra)
 		this.setTitle("Studentadministrasjon");
 		this.setSize(320, 240);
-		//Gj�r klar listen med studenter
+
+		//Legger til en vinduslytter (Dette for Â vite nÂr vinduet lukkes, slik at visMeny() fra Main kan kalles opp igjen.
+	    this.addWindowListener(this);
+	    
+		//Gj¯r klar listen med studenter
 		updateListe();
 		listStudenter = new JList(listModel);		
-		scrollStudenter = new JScrollPane(listStudenter);
-		
-		
-		//Legg alle komponenter og knapper til paneler
-		//panelEast.add(btnLeggTilElev);
-		panelEast.add(btnRedigerElev);
-		//panelEast.add(btnLagGruppe);
+		scrollStudenter = new JScrollPane(listStudenter); //Aktiverer en scrollbar dersom det trengs til lista.
 		
 		//Legg komponenter og paneler til i dialogvinduet
 		this.add(scrollStudenter, BorderLayout.CENTER);
-		this.add(panelEast, BorderLayout.EAST);
+		this.add(btnRedigerElev, BorderLayout.SOUTH);
 		
-		//Legg til lytterer etter knappetrykk
-		btnLeggTilElev.addActionListener((ActionListener) this);
-		btnRedigerElev.addActionListener((ActionListener) this);
-		btnLagGruppe.addActionListener((ActionListener) this);
+		//Legg til lytterer etter knappetrykk og museklikk
+		btnRedigerElev.addActionListener(this);
 		listStudenter.addMouseListener(this);
 		
-		//Sentrer dialogen p� PC-skjermen
+		//Sentrer dialogen pÂ PC-skjermen
 		centerScreen();
-		
-		
 	}
 	
-	
-/*	private void visMeny(){
-		String valg = new String("");
-		System.out.println("\n\n\n\n---- VELKOMMEN TIL VERDENS BESTE STUDENTADMINISTRASJON ----\n");
-		System.out.println("-1-  Legg til en ny student");
-		System.out.println("-2-  Generer studentliste");
-		System.out.println("-0-  Avslutt\n");
-		System.out.print("Valg:");
-		valg = innData.next();
-		
-		if (valg.equals("1")){
-			leggTilStudent();
-		}else if (valg.equals("2")){
-			//blablabla
-		}else if (valg.equals("0")){
-			System.exit(0); // Avslutt
-		}
-	}
-	
-	
-
-	private void leggTilStudent(){
-				
-		Student stud = new Student();
-		
-		//Sp�r om informasjon
-		System.out.print("LEGG TIL NY STUDENT\n\nStudentens fornavn:");
-		stud.setForNavn(innData.next());
-		System.out.print("Etternavn:");
-		stud.setEtterNavn(innData.next());
-		System.out.print("(M)ann eller (D)ame:");
-		if (innData.next().toLowerCase().equals("m")){
-			stud.setKjonn(true);
-		}else{
-			stud.setKjonn(false);
-		}
-		System.out.print("Studiestart (�rstall): ");
-		stud.setStudieStart(innData.next());
-		System.out.print("Fagomr�de: ");
-		stud.setFagOmrade(innData.next().toLowerCase());  //Sett alt til sm� bokstaver (gj�r det enklere � sammenligne senere).
-		
-		//Legge til Studentobjekten i Gruppa
-		gruppe.leggTilStudent(stud);
-		
-		//Lagre Gruppa
-		Filbehandling.lagreGruppe(gruppe);
-		
-		visMeny();
-	}*/
-
-	
-	private void centerScreen() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private Student getValgteStudent(){
+	private Student getValgteStudent(){ //Returnerer studentobjektet som tilh¯rer studenten som er valg i lista.
 		return gruppe.hentStudenterAsVector().elementAt( listStudenter.getSelectedIndex());
 	}
 	
 	private void updateListe(){//Oppdaterer innholdet i listboksen
 		Student[] stud = gruppe.hentStudenterAsArray();
-		//listStudenter = new JList(gruppe.hentStudenterAsArray());
 		
-		listModel.clear();
+		listModel.clear(); //t¯m lista
 		
+		//Legg til alle studenter i lista
 		for (int i = 0; i < stud.length; i++) {
 			listModel.addElement(stud[i]);
 		}
@@ -148,30 +91,32 @@ public class GUIMain extends Dialog implements MouseListener{
 	}
 	
 	
-	public void actionPerformed(ActionEvent ae) { //Tar h�nd om hva som skjer n�r noe blir klikket p�
+	public void actionPerformed(ActionEvent ae) { //Tar hÂnd om hva som skjer nÂr noe blir klikket pÂ
 		
-		if (ae.getSource() == btnLeggTilElev){
-			new GUIStudent(gruppe);
-			Filbehandling.lagreGruppe(gruppe);
-			updateListe();
-			
-		}else if (ae.getSource() == btnRedigerElev){
-			new GUIStudent(gruppe, getValgteStudent());
-			Filbehandling.lagreGruppe(gruppe);
-			updateListe();
-		}else if (ae.getSource() == btnLagGruppe){
-			//new GUIGrupper(gruppe);
+		if (ae.getSource() == btnRedigerElev){ //Hvis knappen "btnRedigerElev" klikkes
+			new GUIStudent(gruppe, getValgteStudent()); //Vis et vindu for redigering av studenten som er valgt
+			Filbehandling.lagreGruppe(gruppe);//Lagre
+			updateListe(); //oppdater lista (i tilfelle navnendringer etc.).
 		}
 	}
 
-	public void mouseClicked(MouseEvent me) {
+	
+	
+	public void mouseClicked(MouseEvent me) { //Hvis brukeren dobbeltklikker
 		  if (me.getClickCount() == 2) {
-				new GUIStudent(gruppe, getValgteStudent());
-				Filbehandling.lagreGruppe(gruppe);
-				updateListe();		
+				new GUIStudent(gruppe, getValgteStudent()); //Vis et vindu for redigering av studenten som har blitt klikket.
+				Filbehandling.lagreGruppe(gruppe); //Lagre
+				updateListe(); //oppdater lista (i tilfelle navnendringer etc.).
 			 }		
 	}
 
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		m.visMeny();
+	}
+
+	//Under her er alle (ubrukte) metodene som kreves av ActionListener og WindowsListener
+	
 	public void mouseEntered(MouseEvent arg0) {
 	}
 
@@ -183,25 +128,41 @@ public class GUIMain extends Dialog implements MouseListener{
 
 	public void mouseReleased(MouseEvent arg0) {
 	}
-	
-	
-	
-/*	//Dette er bare en testmetode for � teste om Filbehandling-metoden fungerer som den skal
-	private void testrun(){
-		//Lag ti studenter (med navn Ola0, Ola1 osv.
-		for (int i = 0; i < 10; i++){
-			gruppe.leggTilStudent(new Student("Ola" + i, "Olsen", 2014, true, "ikt"));
-		}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
 		
-		//Lagre liste
-		Filbehandling.lagreGruppe(gruppe);
-		
-		//Skriv ut listen og antall studenter
-		Student[] stud = gruppe.hentStudenterAsArray();
-		for (int j = 0; j < stud.length; j++){
-			System.out.println(stud[j].toString());
-		}
-		System.out.println("\nTotalt " + (stud.length) + " studenter.");
 	}
-*/
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

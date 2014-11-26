@@ -1,7 +1,9 @@
 import javax.swing.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class GenererGruppe 
 {	
@@ -194,12 +196,16 @@ public class GenererGruppe
 	public void sortereAlfabetisk (Student[] stud)
 	{
 		StringBuffer tekstomrade = new StringBuffer("Alfabetisk liste over studenter: \n");
+		
+		String[] studenter = new String[stud.length]; 
+		for (int i = 0; i < studenter.length; i++){
+			studenter[i] = stud[i].toString();
+		}
+		Arrays.sort(studenter); // metode som sorterer array. Men hva sorteres? fornavn? etternavn? Sjekk dette.
 
-		Arrays.sort( stud ); // metode som sorterer array. Men hva sorteres? fornavn? etternavn? Sjekk dette.
-
-		for ( int i = 0 ; i <= stud.length ; i++ ) // for-l¯kke som henter ut navnene til alle studentene i array. St¯rre eller lik!
+		for ( int i = 0 ; i <= studenter.length ; i++ ) // for-l¯kke som henter ut navnene til alle studentene i array. St¯rre eller lik!
 		{
-			tekstomrade.append(stud[i].getFornavn() + " " + stud[i].getEtternavn() + "\n"); // skriver ut navnene etterhvert som de blir sortert i array - er hvertfall tanken
+			tekstomrade.append(studenter[i] + "\n"); // skriver ut navnene etterhvert som de blir sortert i array - er hvertfall tanken
 		} // slutt for-l¯kke
 		utskrift = tekstomrade + "";
 		JOptionPane.showMessageDialog(null, utskrift);
@@ -208,30 +214,45 @@ public class GenererGruppe
 //	RIKTIG INITIALISERING AV ARRAY HER?
 	public void sortereTilfeldig (Student[] stud) // start metode sortere tilfeldig. 
 	{
-		StringBuffer tekstomrade = new StringBuffer("Studentgrupper tilfeldig \n");
+
+		//Sortere tilfeldig
+		List studenter = new ArrayList();//[stud.length]; 
+		for (int i = 0; i < stud.length; i++){
+			studenter.add(stud[i].toString());
+		}
+		Collections.shuffle(studenter); // metode som "shuffler"/stokker om objektene i arrayen. 
+		
 		
 		// Skal det opprettes en egen array her for sortering, hvor jeg henter inn arrayen med objekter? Eller skal jeg fylle ny array med fornavn/etternavn og deretter sortere?
 		int antallGrupper = Integer.parseInt(JOptionPane.showInputDialog(null,
 				"Hvor mange grupper vil du sortere studentene i?\n"));
 
-		Collections.shuffle(Arrays.asList(stud)); // metode som "shuffler"/stokker om objektene i arrayen. 
-
-			//Collections.shuffle(grp.hentStudenterAsVector()); // stokker om arrayen - FINN RIKTIG KONSTRUKTÿR FRA ANDRE KLASSER HER
-
-
-		for (int i = 0; i <= antallGrupper; i++) // for-l¯kke som deler arrayen opp i grupper
-		{
-			tekstomrade.append("Gruppe nr. " + i + "\n"); // her er tanken at hver gruppe skal legges til i et tekstomrÂde
-
-			for (int k = 0; k <= (stud.length / antallGrupper); k++) // for-l¯kke som skriver ut stokket antall arrayobjekter i hver gruppe
-			{
-				tekstomrade.append(stud[i].getFornavn() + " " + stud[i].getEtternavn() + "\n"); // hvordan skrive ut hvert navn her for deretter Â plassere dem i et tekstomrÂde?
-			} // slutt for-l¯kke
+		StringBuffer[] sb = new StringBuffer[antallGrupper];
+		for (int i = 0; i < sb.length; i++){
+			sb[i] = new StringBuffer();
+		}
+		
+		int counter = 0;
+		int studnr = 0;
+		
+		while (studnr < studenter.size()){
+			sb[counter].append(studenter.get(studnr) + "\n");
+			counter++;
+			studnr++;
 			
-			tekstomrade.append("\n\n");
-
-		} // slutt for-l¯kke
-		utskrift = tekstomrade + "";
+			if (counter >= antallGrupper)
+				counter = 0;
+		}
+		
+		for (int i = 0; i < studenter.size(); i++){
+			System.out.println(studenter.get(i));
+		}
+		
+		utskrift = "";
+		
+		for (int i = 0; i < sb.length; i++){
+			utskrift += sb[i].toString() + "\n\n";
+		}
 		JOptionPane.showMessageDialog(null, utskrift);
 	}// slutt metode sortere tilfeldig
 } // slutt klasse

@@ -14,6 +14,17 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.text.NumberFormatter;
 
+
+/*
+ * GUIStudent.class
+ * 
+ * Hovedvindu for Â redigere informasjon om et studentobjekt.
+ * 
+ * LAGET AV ÿYSTEIN MÿRKESDAL
+ * 
+ */
+
+
 public class GUIStudent extends Dialog{
 
 	
@@ -39,7 +50,7 @@ public class GUIStudent extends Dialog{
 	private JLabel lblEtternavn = new JLabel("Etternavn");
 	private JLabel lblFag = new JLabel("Fag");
 	private JLabel lblOppgaver = new JLabel("Oppgaver");
-	private JLabel lblKjonn = new JLabel("Kj�nn");
+	private JLabel lblKjonn = new JLabel("Kj¯nn");
 	private JLabel lblStudieStart = new JLabel("Studiestart");
 	
 	private JTextField txtFornavn = new JTextField(); 
@@ -48,7 +59,7 @@ public class GUIStudent extends Dialog{
 	private JFormattedTextField txtStudieStart = null;	
 	
 	
-	public GUIStudent(Gruppe gruppe){//Konstrukt�r brukt for � opprette en ny student.
+	public GUIStudent(Gruppe gruppe){//Konstrukt¯r brukt for Â opprette en ny student.
 	
 		this.gruppe = gruppe;
 		
@@ -60,7 +71,7 @@ public class GUIStudent extends Dialog{
 		this.setVisible(true);
 	}
 	
-	public GUIStudent(Gruppe gruppe, Student stud){ //Konstrukt�r brukt for � endre en eksisterende student.
+	public GUIStudent(Gruppe gruppe, Student stud){ //Konstrukt¯r brukt for Â endre en eksisterende student.
 		this.gruppe = gruppe;
 		this.stud = stud;
 		setup();
@@ -70,20 +81,20 @@ public class GUIStudent extends Dialog{
 	}
 
 
-	protected void setup(){ //Ordner vinduet klart til f�rstegangsvisning
-		super.setup(); //Kj�rer setup-metoden fra Dialog-klassen (som denne klassen arver fra)
+	protected void setup(){ //Ordner vinduet klart til f¯rstegangsvisning
+		super.setup(); //Kj¯rer setup-metoden fra Dialog-klassen (som denne klassen arver fra)
 		this.setTitle("Studentadministrasjon - Student");
 		this.setSize(300,220);
-		this.setModal(true); //For � l�se hovedvinduet mens man har dette studentvinduet �pent.
+		this.setModal(true); //For Â lÂse hovedvinduet mens man har dette studentvinduet Âpent.
 		
-		//Konfigurere tekstfelt for integer (�rstall)
+		//Konfigurere tekstfelt for integer (Ârstall)
 		NumberFormat intFormat = NumberFormat.getNumberInstance();
-		intFormat.setGroupingUsed(false); //sl� av gruppering av tall (noe som f�rer til mellomrom i tallrekken, og feil i integer konvertering fra string.
+		intFormat.setGroupingUsed(false); //slÂ av gruppering av tall (noe som f¯rer til mellomrom i tallrekken, og feil i integer konvertering fra string.
 		NumberFormatter numberFormatter = new NumberFormatter(intFormat);
 		txtStudieStart = new JFormattedTextField(numberFormatter);
 		numberFormatter.setValueClass(Integer.class); 
 		numberFormatter.setAllowsInvalid(false); //tillat kun nummer
-		txtStudieStart.setToolTipText("�rstall for studiestart. F.eks. \"2014\"");
+		txtStudieStart.setToolTipText("≈rstall for studiestart. F.eks. \"2014\"");
 		
 		
 		//Gruppere radioknapper
@@ -122,12 +133,12 @@ public class GUIStudent extends Dialog{
 		btnSlett.addActionListener(this);
 		btnOppgaver.addActionListener(this);
 		
-		//Sentrer dialogen p� PC-skjermen
+		//Sentrer dialogen pÂ PC-skjermen
 		centerScreen();
 		
 	}	
 	
-	public void actionPerformed(ActionEvent ae) {
+	public void actionPerformed(ActionEvent ae) { //Tar hÂnd om knappetrykk
 		
 		if (ae.getSource() == btnAvbryt){
 			this.setVisible(false);
@@ -166,7 +177,7 @@ public class GUIStudent extends Dialog{
 		
 	}
 	
-	private void klikkLagre(){
+	private void klikkLagre(){ //Endrer/oppretter og lagrer studentobjektet.
 		
 		
 		if (sjekkFelt()){

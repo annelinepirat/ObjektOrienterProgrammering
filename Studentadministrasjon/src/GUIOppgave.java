@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -12,6 +13,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
+
+/*
+ * GUIOppgave.class
+ * 
+ * Vindu for Â vise informasjon om ett enkelt oppgaveobjekt.
+ * 
+ * LAGET AV ÿYSTEIN MÿRKESDAL
+ * 
+ * 
+ * 
+ * 
+ */
 
 public class GUIOppgave extends Dialog{
 
@@ -25,8 +38,8 @@ public class GUIOppgave extends Dialog{
 	private JButton btnOk = new JButton("Ok");
 	private JButton btnAvbryt = new JButton("Avbryt");
 	
-	private JRadioButton radioBestatt = new JRadioButton("Best�tt");
-	private JRadioButton radioIkkeBestatt = new JRadioButton("Ikke best�tt");
+	private JRadioButton radioBestatt = new JRadioButton("BestÂtt");
+	private JRadioButton radioIkkeBestatt = new JRadioButton("Ikke bestÂtt");
 	private ButtonGroup groupBestatt = new ButtonGroup();
 	
 	private JTextArea txtTilbakemelding = new JTextArea();
@@ -41,13 +54,13 @@ public class GUIOppgave extends Dialog{
 	private Oppgave oppg = null;
 	private Student stud = null;
 
-	public GUIOppgave(Student stud){//Konstruktur med studentobjekt (for � opprette ny oppgave)
+	public GUIOppgave(Student stud){//Konstruktur med studentobjekt (for Â opprette ny oppgave)
 		this.stud = stud;
 		setup();
 		this.setVisible(true);
 	}
 	
-	public GUIOppgave(Oppgave oppg){ //Konstrukt�r med oppgaveobjekt (for redigering)
+	public GUIOppgave(Oppgave oppg){ //Konstrukt¯r med oppgaveobjekt (for redigering)
 		this.oppg = oppg;
 		setup();
 		oppdaterFelt();
@@ -73,12 +86,12 @@ public class GUIOppgave extends Dialog{
 	}
 	
 	protected void setup(){
-		super.setup();
+		super.setup(); //Kj¯rer setup fra moderklassen
 		this.setTitle("Oppgaver");
 		this.setSize(190, 280);
-		this.setModal(true);
+		this.setModal(true); //Kun dette vinduet aktivt
 		
-		//Konfigurere tekstfelt for integer (�rstall)
+		//Konfigurere tekstfelt for integer (Ârstall)
 		txtLevertDato = new JFormattedTextField( datoFormatter("##.##.####"));
 		
 		//Ordne radioknapper
@@ -114,7 +127,7 @@ public class GUIOppgave extends Dialog{
 	}
 
 	
-	public void actionPerformed(ActionEvent ae) {
+	public void actionPerformed(ActionEvent ae) { //Sjekker etter knappetrykk
 		
 		if (ae.getSource() == btnOk){
 			clickOk();
@@ -123,12 +136,12 @@ public class GUIOppgave extends Dialog{
 		}
 	}	
 	
-	private void clickOk(){ //Setter variablene i oppgaveobjektet.
+	private void clickOk(){ //Hva som skjer nÂr knappen "OK" klikker - Setter variablene i oppgaveobjektet.
 			
 		if (sjekkFelt()){
-			if (oppg != null){ //Alts� redigerer en eksisterende oppgave
+			if (oppg != null){ //AltsÂ redigerer en eksisterende oppgave
 				oppdaterOppgaveObjekt();
-			}else{ //Alts� oppretter en ny oppgave
+			}else{ //AltsÂ oppretter en ny oppgave
 				oppg = new Oppgave();
 				oppdaterOppgaveObjekt();
 				stud.addOppgave(oppg);
@@ -138,14 +151,14 @@ public class GUIOppgave extends Dialog{
 			
 	}
 	
-	private void oppdaterOppgaveObjekt(){
+	private void oppdaterOppgaveObjekt(){ //Oppdaterer oppgaveobjektet ut i fra hva brukeren har skrevet i vinduet.
 		oppg.setOppgaveNavn( txtOppgaveNavn.getText());
 		oppg.setLevertDato(txtLevertDato.getText());
 		oppg.settTilbakeMelding(txtTilbakemelding.getText());
 		if (radioBestatt.isSelected()) oppg.setGodkjent(true); else oppg.setGodkjent(false);
 	}
 
-	protected MaskFormatter datoFormatter(String datoString) {
+	protected MaskFormatter datoFormatter(String datoString) {//S¯rger for at det kun blir tastet inn datoer i formatet XX.XX.XXXX
 	    MaskFormatter formatter = null;
 	    try {
 	        formatter = new MaskFormatter(datoString);

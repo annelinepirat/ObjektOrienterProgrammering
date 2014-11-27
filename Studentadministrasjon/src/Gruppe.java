@@ -1,14 +1,14 @@
-import java.io.Serializable;
+//import java.io.Serializable; tror ikke Serializable er nødvendig
 import java.util.Vector;
 
-public class Gruppe implements Serializable 
+public class Gruppe //implements Serializable 
 {
-	private Vector<Student> studenter = new Vector();
+	private Vector<Student> studenter = new Vector<Student>();
 	
-	public Gruppe()
-	{
-		
-	}
+//	public Gruppe() // hva gjør denne?
+//	{
+//		
+//	}
 	
 	public void leggTilStudent(Student stud)
 	{

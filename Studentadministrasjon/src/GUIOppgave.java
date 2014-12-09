@@ -1,8 +1,13 @@
+/**********************************************************
+ * @author Øystein
+ * 
+ * GUIOppgave.class
+ * Vindu for Â vise informasjon om ett enkelt oppgaveobjekt.
+ *********************************************************/
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -13,18 +18,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
-
-/*
- * GUIOppgave.class
- * 
- * Vindu for Â vise informasjon om ett enkelt oppgaveobjekt.
- * 
- * LAGET AV ÿYSTEIN MÿRKESDAL
- * 
- * 
- * 
- * 
- */
 
 public class GUIOppgave extends Dialog{
 
@@ -38,8 +31,8 @@ public class GUIOppgave extends Dialog{
 	private JButton btnOk = new JButton("Ok");
 	private JButton btnAvbryt = new JButton("Avbryt");
 	
-	private JRadioButton radioBestatt = new JRadioButton("BestÂtt");
-	private JRadioButton radioIkkeBestatt = new JRadioButton("Ikke bestÂtt");
+	private JRadioButton radioBestatt = new JRadioButton("Best/u00E5tt");
+	private JRadioButton radioIkkeBestatt = new JRadioButton("Ikke best/u00E5tt");
 	private ButtonGroup groupBestatt = new ButtonGroup();
 	
 	private JTextArea txtTilbakemelding = new JTextArea();
@@ -54,25 +47,29 @@ public class GUIOppgave extends Dialog{
 	private Oppgave oppg = null;
 	private Student stud = null;
 
-	public GUIOppgave(Student stud){//Konstruktur med studentobjekt (for Â opprette ny oppgave)
+	//Konstruktur med studentobjekt (for Â opprette ny oppgave)
+	public GUIOppgave(Student stud){
 		this.stud = stud;
 		setup();
 		this.setVisible(true);
 	}
 	
-	public GUIOppgave(Oppgave oppg){ //Konstrukt¯r med oppgaveobjekt (for redigering)
+	//Konstruktør med oppgaveobjekt (for redigering)
+	public GUIOppgave(Oppgave oppg){ 
 		this.oppg = oppg;
 		setup();
 		oppdaterFelt();
 		this.setVisible(true);
 	}
 	
-	
-	private void oppdaterFelt(){ //Oppdaterer felt med informasjon fra oppg-objekt (brukt ved endring av eksisterende objekt).
+	/*Oppdaterer felt med informasjon fra oppg-objekt 
+	(brukt ved endring av eksisterende objekt).*/
+	private void oppdaterFelt(){ 
 		txtLevertDato.setText( oppg.getLevertDato());
 		txtOppgaveNavn.setText( oppg.getOppgaveNavn());
 		txtTilbakemelding.setText( oppg.getTilbakeMelding());
-		if (oppg.isGodkjent()) radioBestatt.setSelected(true); else radioIkkeBestatt.setSelected(true);
+		if (oppg.isGodkjent()) radioBestatt.setSelected(true); 
+		else radioIkkeBestatt.setSelected(true);
 	}
 
 	private boolean sjekkFelt(){ //Kontrollerer at alle felt er utfyllt
@@ -86,7 +83,7 @@ public class GUIOppgave extends Dialog{
 	}
 	
 	protected void setup(){
-		super.setup(); //Kj¯rer setup fra moderklassen
+		super.setup(); //Kjører setup fra moderklassen
 		this.setTitle("Oppgaver");
 		this.setSize(190, 280);
 		this.setModal(true); //Kun dette vinduet aktivt
@@ -136,7 +133,8 @@ public class GUIOppgave extends Dialog{
 		}
 	}	
 	
-	private void clickOk(){ //Hva som skjer nÂr knappen "OK" klikker - Setter variablene i oppgaveobjektet.
+	private void clickOk(){ /*Hva som skjer nÂr knappen "OK" 
+		klikker - Setter variablene i oppgaveobjektet.*/
 			
 		if (sjekkFelt()){
 			if (oppg != null){ //AltsÂ redigerer en eksisterende oppgave
@@ -151,22 +149,24 @@ public class GUIOppgave extends Dialog{
 			
 	}
 	
-	private void oppdaterOppgaveObjekt(){ //Oppdaterer oppgaveobjektet ut i fra hva brukeren har skrevet i vinduet.
+	private void oppdaterOppgaveObjekt(){ /*Oppdaterer oppgaveobjektet ut i 
+		fra hva brukeren har skrevet i vinduet.*/
 		oppg.setOppgaveNavn( txtOppgaveNavn.getText());
 		oppg.setLevertDato(txtLevertDato.getText());
 		oppg.settTilbakeMelding(txtTilbakemelding.getText());
 		if (radioBestatt.isSelected()) oppg.setGodkjent(true); else oppg.setGodkjent(false);
 	}
 
-	protected MaskFormatter datoFormatter(String datoString) {//S¯rger for at det kun blir tastet inn datoer i formatet XX.XX.XXXX
+	//Sørger for at det kun blir tastet inn datoer i formatet XX.XX.XXXX
+	protected MaskFormatter datoFormatter(String datoString) {
 	    MaskFormatter formatter = null;
 	    try {
 	        formatter = new MaskFormatter(datoString);
-	    } catch (java.text.ParseException pe) { //Hvis feil, si i fra om dette og sett dato til 01/01/2001.
+	      //Hvis feil, si i fra om dette og sett dato til 01/01/2001.
+	    } catch (java.text.ParseException pe) { 
 	        System.err.println("Feil med datotekstfeltet for innlevering" + pe);
 	        txtLevertDato.setText("01.01.2001");
 	    }
 	    return formatter;
-	}	
-	
+	}
 }

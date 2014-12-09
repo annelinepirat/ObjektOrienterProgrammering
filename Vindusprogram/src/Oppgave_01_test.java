@@ -8,5 +8,5 @@ public class Oppgave_01_test
 		vindu.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 	    vindu.setSize( 400, 250 );
 	    vindu.setVisible( true );
-	}
+	}// slutt på main-metode
 }

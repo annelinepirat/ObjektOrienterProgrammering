@@ -1,26 +1,19 @@
+/**************************************************
+ * @author Øystein
+ * GUIMain.class
+ * 
+ * Hovedvinduet for å utføre endringer på studenter.
+ *******************************************************/
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-
-
-/*
- * GUIMain.class
- * 
- * Hovedvinduet for Â utf¯re endringer pÂ studenter.
- * 
- * LAGET AV ÿYSTEIN MÿRKESDAL
- * 
- * 
- * 
- */
 
 public class GUIMain extends Dialog implements MouseListener, WindowListener{
 
@@ -28,9 +21,9 @@ public class GUIMain extends Dialog implements MouseListener, WindowListener{
 	//Main
 	//Vis valg (legg til studenter ELLER lag lister)
 	//Hvis legg til studenter
-	//--Sp¯r om informasjon, lag nytt studentobjekt
+	//--Spør om informasjon, lag nytt studentobjekt
 	//Hvis lag lister
-	//--Sp¯r hva slags liste, sÂ skriv ut.
+	//--Spør hva slags liste, så skriv ut.
 	
 	private Gruppe gruppe = null;
 	
@@ -49,18 +42,21 @@ public class GUIMain extends Dialog implements MouseListener, WindowListener{
 		this.setVisible(true);
 	}
 	
-	protected void setup(){ //Ordner vinduet klart til f¯rstegangsvisning
-		super.setup(); //Kj¯rer setup-metoden fra Dialog-klassen (som denne klassen arver fra)
+	protected void setup(){ //Ordner vinduet klart til førstegangsvisning
+		//Kjører setup-metoden fra Dialog-klassen (som denne klassen arver fra)
+		super.setup(); 
 		this.setTitle("Studentadministrasjon");
 		this.setSize(320, 240);
 
-		//Legger til en vinduslytter (Dette for Â vite nÂr vinduet lukkes, slik at visMeny() fra Main kan kalles opp igjen.
+		/*Legger til en vinduslytter (Dette for å vite når vinduet 
+		lukkes, slik at visMeny() fra Main kan kalles opp igjen.*/
 	    this.addWindowListener(this);
 	    
-		//Gj¯r klar listen med studenter
+		//Gjør klar listen med studenter
 		updateListe();
 		listStudenter = new JList(listModel);		
-		scrollStudenter = new JScrollPane(listStudenter); //Aktiverer en scrollbar dersom det trengs til lista.
+		//Aktiverer en scrollbar dersom det trengs til lista.
+		scrollStudenter = new JScrollPane(listStudenter); 
 		
 		//Legg komponenter og paneler til i dialogvinduet
 		this.add(scrollStudenter, BorderLayout.CENTER);
@@ -70,18 +66,20 @@ public class GUIMain extends Dialog implements MouseListener, WindowListener{
 		btnRedigerElev.addActionListener(this);
 		listStudenter.addMouseListener(this);
 		
-		//Sentrer dialogen pÂ PC-skjermen
+		//Sentrer dialogen på PC-skjermen
 		centerScreen();
 	}
 	
-	private Student getValgteStudent(){ //Returnerer studentobjektet som tilh¯rer studenten som er valg i lista.
-		return gruppe.hentStudenterAsVector().elementAt( listStudenter.getSelectedIndex());
+	//Returnerer studentobjektet som tilhører studenten som er valg i lista.
+	private Student getValgteStudent(){ 
+		return gruppe.hentStudenterAsVector().elementAt( 
+				listStudenter.getSelectedIndex());
 	}
 	
 	private void updateListe(){//Oppdaterer innholdet i listboksen
 		Student[] stud = gruppe.hentStudenterAsArray();
 		
-		listModel.clear(); //t¯m lista
+		listModel.clear(); //tøm lista
 		
 		//Legg til alle studenter i lista
 		for (int i = 0; i < stud.length; i++) {
@@ -90,11 +88,13 @@ public class GUIMain extends Dialog implements MouseListener, WindowListener{
 		
 	}
 	
-	
-	public void actionPerformed(ActionEvent ae) { //Tar hÂnd om hva som skjer nÂr noe blir klikket pÂ
+	//Tar hånd om hva som skjer når noe blir klikket på
+	public void actionPerformed(ActionEvent ae) { 
 		
-		if (ae.getSource() == btnRedigerElev){ //Hvis knappen "btnRedigerElev" klikkes
-			new GUIStudent(gruppe, getValgteStudent()); //Vis et vindu for redigering av studenten som er valgt
+		if (ae.getSource() == btnRedigerElev){ 
+			//Hvis knappen "btnRedigerElev" klikkes
+			//Vis et vindu for redigering av studenten som er valgt
+			new GUIStudent(gruppe, getValgteStudent()); 
 			Filbehandling.lagreGruppe(gruppe);//Lagre
 			updateListe(); //oppdater lista (i tilfelle navnendringer etc.).
 		}
@@ -104,7 +104,8 @@ public class GUIMain extends Dialog implements MouseListener, WindowListener{
 	
 	public void mouseClicked(MouseEvent me) { //Hvis brukeren dobbeltklikker
 		  if (me.getClickCount() == 2) {
-				new GUIStudent(gruppe, getValgteStudent()); //Vis et vindu for redigering av studenten som har blitt klikket.
+			//Vis et vindu for redigering av studenten som har blitt klikket.
+				new GUIStudent(gruppe, getValgteStudent()); 
 				Filbehandling.lagreGruppe(gruppe); //Lagre
 				updateListe(); //oppdater lista (i tilfelle navnendringer etc.).
 			 }		
@@ -115,7 +116,8 @@ public class GUIMain extends Dialog implements MouseListener, WindowListener{
 		m.visMeny();
 	}
 
-	//Under her er alle (ubrukte) metodene som kreves av ActionListener og WindowsListener
+	/*Under her er alle (ubrukte) metodene som kreves 
+	av ActionListener og WindowsListener*/
 	
 	public void mouseEntered(MouseEvent arg0) {
 	}

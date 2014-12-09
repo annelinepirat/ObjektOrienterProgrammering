@@ -1,5 +1,4 @@
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -12,8 +11,8 @@ public class Oppgave_01_vindu extends JFrame implements ActionListener
 	public Oppgave_01_vindu()
 	{
 		super( "km/h til m/s" );
-	    utskriftsområde = new JTextArea( 10, 30 );
-	    JScrollPane skrollområde = new JScrollPane( utskriftsområde );
+	    utskriftsområde = new JTextArea( 10, 30 );// velger str på hvor stort utskriftområdet er
+	    JScrollPane skrollområde = new JScrollPane( utskriftsområde );// skroll innnebygd
 	    skrivefelt = new JTextField( 10 );
 	    skrivefelt.addActionListener( this );  //registrerer vindusobjektet
 	                                     //som lytteobjekt for skrivefeltet
@@ -24,7 +23,7 @@ public class Oppgave_01_vindu extends JFrame implements ActionListener
 	    c.add( skrivefelttekst );   //plasserer komponentene i kontaineren
 	    c.add( skrivefelt );        //i den rekkefølge vi vil ha dem
 	    c.add( skrollområde );
-	    utskriftsområde.setText( "Konverterte kilometer\n" );
+	    utskriftsområde.setText( "Konverterte hastighet i km/h yil m/s\n" );
 	}
 
 	  //metode som blir kalt opp hver gang det trykkes på retur-tasten 
@@ -34,10 +33,10 @@ public class Oppgave_01_vindu extends JFrame implements ActionListener
 		String utskrift = "";
 		String input = skrivefelt.getText(); //leser inn det som 
 	                                         //står i tekstfeltet
-	    double km = Double.parseDouble ( input );
-	    if (km >= 0)
+	    double km = Double.parseDouble ( input );// parser det jeg får i input fra brukeren
+	    if (km > 0)
 	    {
-	    		utskrift = input + " = " + 
+	    		utskrift = input + " km/h = " + 
 		            Oppgave_01_utregning.konvertertLengde( km );	
 	    }
 	    else

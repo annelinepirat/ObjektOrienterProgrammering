@@ -11,6 +11,6 @@ public class Oppgave_03
 			return resultat;
 		}
 		else
-			return "Det er ikke mulig å regne ut areal av en rektangel med negativ verdi.";
+			return "Det er umulig å regne ut areal av en rektangel med negativ verdi.";
 	}
 }

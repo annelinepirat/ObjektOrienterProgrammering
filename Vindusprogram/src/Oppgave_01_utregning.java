@@ -2,7 +2,7 @@ public class Oppgave_01_utregning
 {
 	public static String konvertertLengde (double km)
 	{
-		if (km >= 0)
+		if (km > 0)
 		{
 			double ms = km * 1000 / 3600;
 			

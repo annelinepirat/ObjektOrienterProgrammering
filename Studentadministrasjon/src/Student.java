@@ -1,44 +1,62 @@
+/*************************************************************************
+ * @author Øystein
+ * Student.class
+ * 
+ * Klassen representerer en student som en del av en gruppe i 
+ * Studentadministrasjonsprogrammet.
+ * 
+ * Klassen skal inneholde, sette og svare på
+ * 1.Studentens navn
+ * 2.Studentens studiestart
+ * 3.Studentens kjønn
+ * 4.Studentens oppgaver (dypere informasjon om oppgavene lagres 
+ * i et eget oppgave-objekt).
+ * 5.Studentens status i forhold til om alle oppgaver er godkjente, og 
+ * studenten er klar til eksamen.
+ * 6.Studentnummer (vi tar ikke denne i bruk, men legger den ved da vi 
+ * kan se en fremtidig nytte av dette; skille studenter med likt navn og 
+ * samkjøring mot andre skolesystemer).
+ * 7.Studentens fagområde
+ **************************************************************************/
+import java.io.Serializable;
+import java.util.Vector;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
-/*Student.class
- * 
- * Klassen representerer en student som en del av en gruppe i Studentadministrasjonsprogrammet.
- * 
- * Klassen skal inneholde, sette og svare pÂ
- * 1.Studentens navn
- * 2.Studentens studiestart
- * 3.Studentens kj¯nn
- * 4.Studentens oppgaver (dypere informasjon om oppgavene lagres i et eget oppgave-objekt).
- * 5.Studentens status i forhold til om alle oppgaver er godkjente, og studenten er klar til eksamen.
- * 6.Studentnummer (vi tar ikke denne i bruk, men legger den ved da vi kan se en fremtidig nytte av dette; skille studenter med likt navn og samkj¯ring mot andre skolesystemer).
- * 7.Studentens fagomrÂde
- *  
- *  LAGET AV ÿYSTEIN MÿRKESDAL
- *  
- */
-
-
 public class Student implements Serializable{
 	
-	private String fornavn = "";					//Studentens fornavn
-	private String etternavn = "";					//Studentens etternavn
-	private String fagomrade ="";					//Studentens fagomrÂde (f.eks. Matematikk)
-	private boolean mann = true;					//Variabel for kj¯nn; true = mann, false = kvinne (tilfeldig valgt, trenger ikke tolkes... :)
-	private int studiestart = 2014;					//Studentens studiestart f.eks. 2014
-	private String studentnummer = "";				//Studentnummer f.eks. s123456789
-	private Vector<Oppgave> oppgaver = new Vector();//En vektor som inneholder alle studentens oppgaver.
+	//Studentens fornavn
+	private String fornavn = "";		
+	//Studentens etternavn
+	private String etternavn = "";	
+	//Studentens fagområde (f.eks. Matematikk)
+	private String fagomrade ="";	
+	/*Variabel for kjønn; true = mann, 
+	false = kvinne (tilfeldig valgt, trenger ikke tolkes... :)*/
+	private boolean mann = true;		
+	//Studentens studiestart f.eks. 2014
+	private int studiestart = 2014;	
+	//Studentnummer f.eks. s123456789
+	private String studentnummer = "";	
+	//En vektor som inneholder alle studentens oppgaver.
+	private Vector<Oppgave> oppgaver = new Vector();
 	
 	
-	//En tom konstrukt¯r i tilfellet man trenger Â opprette et studentobjekt f¯r en har data til Â fylle det.
+	/*En tom konstruktør i tilfellet man trenger å 
+	opprette et studentobjekt før en har data til å fylle det.*/
 	public Student(){
 		
 	}
 	
-	//Konstrukt¯r for Â opprette en ny student med alle verdier satt.
-	public Student(String forNavn, String etterNavn, int studieStart, boolean kjonnMann, String fagOmrade, Vector<Oppgave> oppgaver){
+	//Konstruktør for å opprette en ny student med alle verdier satt.
+	public Student(String forNavn, 
+			String etterNavn, 
+			int studieStart, 
+			boolean kjonnMann, 
+			String fagOmrade, 
+			Vector<Oppgave> oppgaver){
 		this.fornavn = forNavn;
 		this.etternavn = etterNavn;
 		this.studiestart = studieStart;
@@ -69,18 +87,20 @@ public class Student implements Serializable{
 	}
 	
 
-	//Returnerer studentens hele navn dersom metoden blir kalt. Dette skjer f.eks. ved at man System.out.println studentobjektet, eller ved at man
-	//legger objektet i en liste. Med andre ord, denne metoden bestemmer hvordan objektet vises i en liste.
+	/*Returnerer studentens hele navn dersom metoden blir kalt. 
+	Dette skjer f.eks. ved at man System.out.println studentobjektet, 
+	eller ved at man legger objektet i en liste. Med andre ord, 
+	denne metoden bestemmer hvordan objektet vises i en liste.*/
 	public String toString(){
 		return fornavn + " " + etternavn;
 	}
 	
-	//Setter eller endrer studentens fagomrÂde
+	//Setter eller endrer studentens fagområde
 	public void setFag(String fag){
 		this.fagomrade = fag;
 	}
 
-	//Returnerer studentens fagomrÂdet
+	//Returnerer studentens fagområdet
 	public String getFag(){
 		return fagomrade;
 	}
@@ -90,8 +110,10 @@ public class Student implements Serializable{
 		try{
 			this.studiestart = Integer.parseInt(studieStart);
 		}catch (Exception e){
-			System.out.println("Feil ved lesing av studestart. Setter studiestart til gjeldene Âr!" + e);
-			//Ved feil, sett Ârstall til innenvÊrende Âr
+			System.out.println(
+					"Feil ved lesing av studestart. "
+					+ "Setter studiestart til gjeldene \u00E5r!" + e);
+			//Ved feil, sett årstall til innenvÊrende år
 			GregorianCalendar gc = new GregorianCalendar();
 			this.studiestart = gc.get( Calendar.YEAR);
 		}
@@ -107,17 +129,18 @@ public class Student implements Serializable{
 		return mann;
 	}
 	
-	//Returnerer true hvis dame, false hvis mann (denne metoden er laget i likestillingens navn!)
+	/*Returnerer true hvis dame, false hvis mann 
+	(denne metoden er laget i likestillingens navn!)*/
 	public boolean isDame(){
 		return !mann;
 	}
 	
-	//Returnerer kj¯nnet som en streng.
+	//Returnerer kjønnet som en streng.
 	public String getKjonn(){
 		if (mann) return "Mann"; else return "Kvinne";
 	}
 	
-	//Setter eller endrer studentens kj¯nn
+	//Setter eller endrer studentens kjønn
 	public void setKjonn(boolean mann){
 		this.mann = mann;
 	}
@@ -149,10 +172,13 @@ public class Student implements Serializable{
 		return oppgaver;
 	}
 	
-	//Kontrollerer hver eneste oppgave studenten har, og returnerer true hvis alle er godkjente (altsÂ at studenten kan ta eksamen) og false hvis ikke.
+	/*Kontrollerer hver eneste oppgave studenten har, og 
+	returnerer true hvis alle er godkjente (altså at studenten kan ta eksamen) 
+	og false hvis ikke.*/
 	public boolean isGodkjent(){
 
-		//GÂ gjennom alle oppgaver, dersom en ikke er godkjent: returner false eller returner true
+		/*Gå gjennom alle oppgaver, dersom en ikke er godkjent: returner 
+		false eller returner true*/
 		for (int i = 0; i < oppgaver.size(); i++){
 			if (oppgaver.elementAt(i).isGodkjent())
 				continue;
@@ -161,7 +187,8 @@ public class Student implements Serializable{
 				
 		}
 		
-		if (oppgaver.size() < 1) //returner FALSE dersom studenten ennÂ ikke har gjort noen oppgaver.
+		//returner FALSE dersom studenten ennå ikke har gjort noen oppgaver.
+		if (oppgaver.size() < 1) 
 			return false;
 		
 		return true;

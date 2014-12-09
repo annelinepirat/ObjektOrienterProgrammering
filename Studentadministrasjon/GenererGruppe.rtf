@@ -1,0 +1,112 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1343\cocoasubrtf160
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red16\green19\blue26;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sl287
+
+\f0\fs26 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Vindusbaserte programmer\
+Innledning\
+De programmene vi har laget hittil har ikke hatt noe eget programvindu (hovedvindu) p\'e5 skjermen med grafiske skjermkomponenter (knapper, tekstfelter etc.), slik vi er vant med fra programmer som TextPad, Word, Excel etc. Det eneste vi har brukt av vinduer, er dialogbokser (av type MessageDialog for utskrift, og av type InputDialog ogOptionDialog for innlesing). Det normale for et program er imidlertid at det for programmet blir definert og opprettet et eget vindu p\'e5 skjermen. Dette vinduet vises kontinuerlig p\'e5 skjermen s\'e5 lenge programmet kj\'f8rer. Vinduet inneholder knapper, tekstfelter, tekstomr\'e5der, menyer og andre typer grafiske skjermkomponenter som brukeren beh\'f8ver for \'e5 kj\'f8re programmet. Programmet blir avsluttet ved at brukeren lukker programvinduet. Vi skal n\'e5 l\'e6re \'e5 lage slike programmer.\
+Rammeverk for vindusbasert program\
+N\'e5r vi skal skrive et vindusbasert program, m\'e5 vi bygge videre p\'e5 programkode som finnes i javas klassebibiotek: Vi m\'e5 definere det som kalles en subklasse til klassen JFrame(som vi importerer fra pakken javax.swing). Klassen JFrame inneholder programkode for det vi kan kalle rammeverket for et vindu. Det at vi definerer en subklasse til den, betyr at vi bygger videre p\'e5 den ved \'e5 supplere den med v\'e5r egen programkode, slik at vi f\'e5r lagt inn i vinduet de komponentene vi \'f8nsker \'e5 ha der, og f\'e5r definert den funksjonaliteten som vi \'f8nsker at vinduet skal ha. En subklasse til klassen JFrame f\'e5r vi definert ved at vi skriver extends JFrame bak klassenavnet til klassen vi definerer. Det blir denne subklassen som blir v\'e5r vindusklasse, det vil si som definerer vinduet v\'e5rt. I main-metoden til programmet oppretter vi et objekt av den vindusklassen vi definerer.\
+Nedenfor f\'f8lger et eksempel i pseudo-kode som skisserer rammeverket for et slikt program.\
+Eksempel\
+import javax.swing.*; //importerer det vi trenger fra pakken                       //javax.swing, blant annet JFrame  \
+public class Vindu extends JFrame \{   < datafelter, blant annet for grafiske vinduskomponenter >    \
+public Vindu()    // konstrukt\'f8r   \{     \
+super( "Vinduseksempel" ); //parameteren kommer som tittellinje i vinduet     < oppretter grafiske komponenter og bygger opp skjermbilde,               eventuelt ved \'e5 gj\'f8re kall p\'e5 en egen metode for dette >     setSize( 400, 300 ); //setter bredde og h\'f8yde for vinduet i antall pixler     \
+setVisible( true );  //gj\'f8r vinduet synlig p\'e5 skjermen   \}    < metoder etter \'f8nsker og behov > \} \
+Jeg minner om at konstrukt\'f8rer for klasser ble omtalt i kapittel 3. I programmets main-metode m\'e5 vi opprette et objekt av den klassen som er definert. Det er tillatt \'e5 plasseremain-metoden inni samme klassen, men det gir ryddigere programmering \'e5 plassere den i en egen klasse:\
+public class Vindustest \{   public static void main( String[] args )   \{     Vindu vindu = new Vindu();     /* Kunne ogs\'e5 her ha skrevet        vindu.setSize( ..., ... ); //med parametre for \'f8nsket st\'f8rrelse        vindu.setVisible( true );        i tilfelle det ikke var gjort i konstrukt\'f8ren til Vindu.     */   \} \} \
+Programeksempel 1: Bruke vindu istedenfor meldingsboks\
+Som f\'f8rste eksempel p\'e5 et vindusbasert program skal vi omarbeide programeksempel 4 fra kapittel 7 til et vindusbasert program. Programmet demonstrerte bruk av arrayer som metodeparametre. Resultatene fra programmet ble skrevet ut i et tekstomr\'e5de. Dette ble til slutt vist i en meldingsboks av type MessageDialog. Programmet skal ha samme funksjonalitet som f\'f8r. Eneste endringen skal v\'e6re at programmet f\'e5r sitt eget vindu p\'e5 skjermen. I dette vinduet skal tekstomr\'e5det med programutskrift vises, istedenfor at det vises i en meldingsboks, som jo egentlig bare er ment \'e5 v\'e6re et hjelpevindu for et annet programvindu. Det at et program f\'e5r sitt eget vindu p\'e5 skjermen, kan vi blant annet se ved at det blir en tilh\'f8rende knapp p\'e5 oppgavelinja nederst p\'e5 skjermen.\
+Tidligere har vi opprettet tekstomr\'e5der ved \'e5 bruke default-konstrukt\'f8r. Det vil da automatisk bli laget akkurat stort nok til \'e5 romme den tekst vi legger inn i det, det vil si h\'f8yt nok til \'e5 romme de tekstlinjene vi legger inn, og bredt nok til \'e5 romme den lengste av disse. Men n\'e5r vi skal legge tekstomr\'e5det inn i et egendefinert vindu, slik vi skal gj\'f8re her, \'f8nsker vi som regel selv \'e5 bestemme st\'f8rrelse p\'e5 vinduet. Da trenger vi vanligvis ogs\'e5 \'e5 bestemme st\'f8rrelse p\'e5 tekstomr\'e5der, og eventuelle andre komponenter, slik at de passer inn i vinduet v\'e5rt. St\'f8rrelse p\'e5 tekstomr\'e5der f\'e5r vi bestemt ved to konstrukt\'f8rparametre, som vist i instruksjonen ovenfor. St\'f8rrelsen avgj\'f8r ikke hvor mye tekst det er mulig \'e5 plassere i tekstomr\'e5det, men hvor mye som kan v\'e6re synlig p\'e5 skjermen samtidig. I dette tilfellet blir det 10 linjer i h\'f8yden og 40 tegn i bredden. Dette med bredde m\'e5 vi imidlertid ta med en liten klype salt. Som vi vet, kan tegn ha litt forskjellig bredde, avhengig av hvilken skrifttype som brukes. Vi m\'e5 derfor oppfatte 40 som en slags gjennomsnittsverdi.\
+Som nevnt, kan et tekstomr\'e5de inneholde mer tekst enn det som kan vises samtidig: det kan ha flere linjer, og linjer kan v\'e6re s\'e5 lange at det ikke er plass til dem innenfor tekstomr\'e5dets bredde p\'e5 skjermen. Det vil da v\'e6re aktuelt \'e5 utstyre tekstomr\'e5det med skrollefelter, slik at brukeren kan navigere i det for \'e5 komme fram til de forskjellige delene av teksten. For \'e5 f\'e5 til dette, legger vi tekstomr\'e5det inn i en komponent av typeJScrollPane, ved \'e5 skrive f\'f8lgende instruksjon:\
+    JScrollPane skrollefelt = new JScrollPane(utskrift); \
+Det er da JScrollPane-komponenten vi plasserer i vinduet, istedenfor tekstomr\'e5det. Men det er fortsatt tekstomr\'e5det vi legger tekst inn i (ved \'e5 bruke setText eller append)!\
+Grafiske skjermkomponenter ligger ikke direkte i selve vinduet, men i det som p\'e5 engelsk kalles vinduets contentPane. Siden dette er noe som kan inneholde komponenter, kalles det en Container. (Det er et objekt av type Container.) Vi f\'e5r tak i den ved \'e5 skrive instruksjonen\
+    Container c = getContentPane(); \
+For \'e5 legge inn komponenter bruker vi Container-objektets add-metode ved at vi i v\'e5rt tilfelle skriver\
+  c.add(skrollefelt); \
+Merknad 1 Du har kanskje merket deg at n\'e5r vi har lagt inn tekstomr\'e5de i meldingsbokser, s\'e5 har vi ikke trengt \'e5 legge det inn i noen contentPane. Vi har skrevet en instruksjon som\
+    JOptionPane.showMessageDialog( null, tekstomr\'e5de,          "Vindustittel", JOptionPane.PLAIN_MESSAGE ); \
+Her gj\'f8r vi kall p\'e5 metoden showMessageDialog for \'e5 vise dialogboksen med tekstomr\'e5det. Da er det denne metoden som s\'f8rger for \'e5 legge inn grafiske komponenter i dialogboksens contentPane, blant annet tekstomr\'e5det som metoden mottar via en parameter. Programkoden er derfor skjult for oss i denne metoden. I det programmet vi n\'e5 holder p\'e5 med, er det vi selv som m\'e5 skrive den n\'f8dvendige koden for \'e5 legge inn grafiske skjermkomponenter i vinduet v\'e5rt.\
+Merknad 2 Fra og med java-versjon 1.5, eller 5.0 som den ogs\'e5 kalles, er det tilatt \'e5 bruke add-metoden direkte for vindusklassen. Vi kunne alts\'e5 ha skrevet bare\
+    add(skrollefelt); \
+for \'e5 legge tekstomr\'e5det inn i vinduet, uten \'e5 f\'e5 tak i vinduets contentPane. Men det som i virkeligheten da skjer, er at denne add-metoden henter fram vinduets contentPane, slik vi har gjort, og gj\'f8r kall p\'e5 add-metoden for dette, slik vi har gjort.\
+Instruksjonen\
+    setSize(650, 250); \
+bestemmer st\'f8rrelse for vinduet v\'e5rt, ved at bredde og h\'f8yde angis som metodeparametre. M\'e5leenhet for st\'f8rrelse p\'e5 vinduer, vinduskomponenter og grafiske skjermkomponenter for \'f8vrig, er piksel (eller pixel). Dette er en relativ m\'e5leenhet. St\'f8rrelsen er bestemt av hvilken oppl\'f8sning som er satt for skjermen. En typisk oppl\'f8sning er 1280 piksler i bredden og 1024 piksler i h\'f8yden. Grafiske skjermkomponenter er alts\'e5 bygget opp av piksler. En piksel er det minste elementet p\'e5 en bildeflate som kan tildeles farge og intensitet. N\'e5r vi setter st\'f8rrelse p\'e5 tekstomr\'e5der, vinduer og andre komponenter, m\'e5 vi ofte pr\'f8ve oss litt fram for \'e5 komme fram til en st\'f8rrelse som vi er forn\'f8yd med.\
+Et vindu vil ikke bli gjort synlig p\'e5 skjermen uten at programmet har en instruksjon for dette. Det er instruksjonen\
+    setVisible(true); \
+Vindusklassen v\'e5r inneholder i tillegg til konstrukt\'f8ren, som setter opp vinduet og gj\'f8r det synlig, metoden demonstrerArrayparametre. I denne ligger den funksjonaliteten som vi i dette tilfelle \'f8nsker at vinduet skal ha. I andre programmer vil det selvsagt dreie seg om en eller flere andre metoder. I dette tilfelle vil vi ha opprettet et Arraybehandler-objekt, gjort de metodekall vi \'f8nsker for dette, og plassert utskrift i tekstomr\'e5det som vises p\'e5 skjermen. I vindusklassens konstrukt\'f8r blir det gjort kall p\'e5 metodendemonstrerArrayparametre for \'e5 f\'e5 utf\'f8rt de instruksjonene den inneholder. Legg merke til at siden vi trenger \'e5 referere til vinduets tekstomr\'e5de b\'e5de i konstrukt\'f8ren og i metoden demonstrerArrayparametre, s\'e5 m\'e5 tekstomr\'e5det deklareres utenfor b\'e5de konstrukt\'f8ren og denne metoden, det vil si p\'e5 klasseniv\'e5.\
+Programmets main-metode er inneholdt i klassen Arraytest som er gjengitt nedenfor, etter vindusklassen. Det blir opprettet et vindu av den type vi har definert. Vinduet vil se ut som vist p\'e5 f\'f8lgende bilde\
+ \
+De data som vises i vinduet vil imidlertid variere fra kj\'f8ring til kj\'f8ring, siden det er slumptall. Legg merke til at det i tillegg til lukkeknappen i vinduets \'f8verste h\'f8yre hj\'f8rne er knapper for maksimering og minimering, slik vi ellers er vant til for vinduer. Dialogbokser er ikke utstyrt med slike knapper. Instruksjonen\
+    vindu.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ); \
+bestemmer hvordan vinduets lukkeknapp skal virke. Den forh\'e5ndsprogrammerte virkem\'e5ten er at vinduet lukker seg n\'e5r vi klikker p\'e5 knappen, men vindusobjektet vil fortsatt eksistere og programmet blir ikke avsluttet. Den viste instruksjonen har som virkning at programmet blir avsluttet i tillegg til at vinduet lukker seg.\
+ 1 import javax.swing.*; \
+ 2 import java.awt.*; \
+ 3 \
+ 4 public class Arraytestvindu extends JFrame \
+ 5 \{ \
+ 6   private JTextArea utskrift; \
+ 7   private Arraybehandler behandler; \
+ 8 \
+ 9   public Arraytestvindu() \
+10   \{ \
+11     super("Arrayparametre"); \
+12     behandler = new Arraybehandler(); \
+13     Container c = getContentPane(); \
+14     utskrift = new JTextArea(10, 30); \
+15     utskrift.setEditable(false); \
+16     utskrift.setTabSize(5); \
+17     JScrollPane skrollefelt = new JScrollPane(utskrift); \
+18     c.add(skrollefelt); \
+19     setSize(650, 250); \
+20     setVisible(true); \
+21   \} \
+22 \
+23   public void demonstrerArrayparametre() \
+24   \{ \
+25     int tallgrense = 20; \
+26     //oppretter slumptallsliste og printer den ut \
+27     int[] liste = behandler.lagListe( 10, tallgrense ); \
+28     utskrift.setText("Illustrasjon av arrayparametres virkem\'e5te " + \
+29                      "sammenliknet med parametre av primitiv type\\n"); \
+30     behandler.print( utskrift, "Opprinnelig array", liste ); \
+31 \
+32     //reverserer lista og printer ut reversert liste \
+33     behandler.reverser( liste ); \
+34     utskrift.append( \
+35             "\\nReverserer arrayen ved \'e5 bruke den som parameter " + \
+36             "i en metode som utf\'f8rer reverseringen." ); \
+37     behandler.print( utskrift, "\\nReversert array", liste ); \
+38\
+39     //printer ut siste listeelement \
+40     utskrift.append( \
+41             "\\nSiste arrayelement " + liste[ liste.length - 1 ]  + \
+42             " skal brukes som aktuell parameter en metode som dobler " + \
+43             "mottatt parameterverdi." ); \
+44 \
+45     //viser virkning av dubleringsmetode \
+46     int doblet = behandler.dubler( liste[ liste.length - 1 ] ); \
+47     utskrift.append( "\\nDoblet verdi av aktuell parameter: " + \
+48               doblet ); \
+49     utskrift.append( "\\nAktuell parameter har beholdt sin verdi: " + \
+50           liste[ liste.length - 1 ] ); \
+51   \} \
+52 \} \
+ 1 import javax.swing.JFrame; \
+ 2 \
+ 3 public class Arraytest \
+ 4 \{ \
+ 5   public static void main( String[] args ) \
+ 6   \{ \
+ 7     Arraytestvindu vindu = new Arraytestvindu(); \
+ 8     vindu.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ); \
+ 9     vindu.demonstrerArrayparametre(); \
+10   \} \
+11 \}}

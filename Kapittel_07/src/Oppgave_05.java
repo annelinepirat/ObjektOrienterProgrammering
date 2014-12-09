@@ -34,27 +34,20 @@ public class Oppgave_05
 		   }//slutt på indre for-løkke
 	   }// slutt på ytre for-løkke
 	   
+	   int teller = 0;
+	   
 	   for ( int i = 0; i < alfabet.length; i++)
 	   {
-		   //if (forekomst[i] != 0) 
-		   //{
+		   if (forekomst[i] != 0)
+		   {
 			   tekstområde.append (alfabet[i] + " : " + forekomst [i] + "\t");// appender med alfabet [i] og forekomst [i] (for eksempel hvis det er 2 små a'er så står det a : 2)
-			   //vil bare ha 5 bokstaver på hver linje i utskriften
-			   if (alfabet[i] == 'D')
-				   tekstområde.append ("\n");
-			   else if(alfabet[i] == 'H')
+			   //vil bare ha 10 bokstaver på hver linje i utskriften
+			   teller++;
+			   if (teller % 10 == 0)
+			   {
 				   tekstområde.append("\n");
-			   else if(alfabet[i] == 'L')
-				   tekstområde.append("\n");
-			   else if(alfabet[i] == 'P')
-				   tekstområde.append("\n");
-			   else if (alfabet[i] == 'T')
-				   tekstområde.append("\n");
-			   else if (alfabet[i] == 'X')
-				   tekstområde.append("\n");
-			   else if (alfabet[i] == 'Ø')
-				   tekstområde.append("\n");
-		  // }
+			   }
+		   }
 	   }// slutt på for-løkke som legger til tekst til utskrift for brukeren
 
      tekstområde.append ("\nI alt " + antall + " bokstaver.");//Legger til tekst nederst i tekstvindu

@@ -1,10 +1,15 @@
+/************************************************************
+ * @author Øystein
+ * 
+ * GUIStudent.class
+ * Hovedvindu for Â redigere informasjon om et studentobjekt.
+ *************************************************************/
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.text.NumberFormat;
 import java.util.Vector;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -13,17 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.text.NumberFormatter;
-
-
-/*
- * GUIStudent.class
- * 
- * Hovedvindu for Â redigere informasjon om et studentobjekt.
- * 
- * LAGET AV ÿYSTEIN MÿRKESDAL
- * 
- */
-
 
 public class GUIStudent extends Dialog{
 
@@ -50,7 +44,7 @@ public class GUIStudent extends Dialog{
 	private JLabel lblEtternavn = new JLabel("Etternavn");
 	private JLabel lblFag = new JLabel("Fag");
 	private JLabel lblOppgaver = new JLabel("Oppgaver");
-	private JLabel lblKjonn = new JLabel("Kj¯nn");
+	private JLabel lblKjonn = new JLabel("Kj\u00F8nn");
 	private JLabel lblStudieStart = new JLabel("Studiestart");
 	
 	private JTextField txtFornavn = new JTextField(); 
@@ -94,7 +88,7 @@ public class GUIStudent extends Dialog{
 		txtStudieStart = new JFormattedTextField(numberFormatter);
 		numberFormatter.setValueClass(Integer.class); 
 		numberFormatter.setAllowsInvalid(false); //tillat kun nummer
-		txtStudieStart.setToolTipText("≈rstall for studiestart. F.eks. \"2014\"");
+		txtStudieStart.setToolTipText("/u00C5rstall for studiestart. F.eks. \"2014\"");
 		
 		
 		//Gruppere radioknapper

@@ -31,11 +31,11 @@ public class Oppgave_02
 		JTextArea tekstområde = new JTextArea();// oppretter tekstområde
 		tekstområde.setText("Overskrift\n");// setter starttekst i tekstområde
 		
-		for (int i = 0; i < 10; i++)// starter for-løkke
+		for (int i = 0; i < liste.length; i++)// starter for-løkke
 		{
 			if (liste [i] != 0)// if test så lenge liste av i er forskjellig fra 0
 			{
-				for (int j = 1; j<liste[i]+1; j++)// starter indre for-løkke
+				for (int j = 0; j<liste[i]; j++)// starter indre for-løkke
 				{
 					tekstområde.append ("*");// legg til stjerner
 				}
